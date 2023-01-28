@@ -54,6 +54,18 @@ struct Problem* generateRandomProblem() {
 	if (secondVarName >= firstVarName)
 		secondVarName++;
 
+	// Calculate sizes.
+	std::stringstream q;
+	q << "What is the value of the variable, " << secondVarName
+			<< ", when the following code finishes executing?";
+	problem->question = flush(&q);
+
+	q << "int " << firstVarName << " = " << firstVar << ';' << std::endl;
+	q << "int " << secondVarName << " = " << firstVarName << " + " << secondVar
+			<< ';' << std::endl;
+	q << secondVarName << " += " << firstVarName << "++;" << std::endl;
+	problem->code = flush(&q);
+
 	return problem;
 }
 
