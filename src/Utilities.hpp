@@ -33,7 +33,7 @@ template<class T> char* printArray(unsigned size, T (*arr)[]) {
 			b << (*arr)[i] << ", ";
 		b << (*arr)[size - 1];
 	}
-	b << ']' << std::endl;
+	b << ']';
 	return flush(&b);
 }
 
@@ -41,29 +41,55 @@ template<class T> char* printArray(unsigned size, T (*arr)[]) {
  * Generates count distinct random numbers, within the range specified by min and max, and returns a pointer to an array containing the values.
  * Note that the random numbers will be returned in sorted order.
  *
+ * It is important to note that, although the elements returned are, themselves, pseudorandom, the returned array is not at all pseudorandom. In particular, it is likely that larger values will be found near the end of the array.
+ * Notice that the array itself is ordered. Out of every possible number in the specified range to be sampled by this function and put into the array, none are more likely to appear in the array than others. However, out of every possible array containing distinct elements in the specified range, some are more likely than others to be returned by this function.
+ * In essence, shuffling the filled values will "fix" any order.
+ *
  * If the range max-min is greater than RAND_MAX, then the results of an invocation of this function are undefined.
+ * If max is less than or equal to min, the results are undefined.
  */
-template<class T> void fillWithDistinctRandoms(unsigned startpos,
+template<class T> void fillWithDistinctRandomElements(unsigned startpos,
 		unsigned count, int min, int max, T (*arr)[]) {
-	for (unsigned int i = 0; i < count; ++i) {
+	for (unsigned i = 0; i < count; ++i) {
 		(*arr)[i] = rand() % (max - min - i) + min;
 
-		bool shifted;
-		for (unsigned int j = 0; j < i; ++j)
-			if ((*arr)[j] >= (*arr)[i]) {
-				++(*arr)[i]; // Shift variable up because it's >= to a value earlier in list.
-				shifted = true;
+		unsigned shiftcount = 0;
+		for (unsigned j = 0; j < i; ++j)
+			if (((*arr)[i]) >= ((*arr)[j])) {
+				++shiftcount;
 			}
-
-		if (shifted)
-			for (unsigned int j = 0; j < i; ++j)
+		(*arr)[i] += shiftcount;
+		if (shiftcount)
+			for (unsigned j = 0; j < i; ++j)
 				if ((*arr)[i] == (*arr)[j]) {
 					++(*arr)[i];
-					j = 0; // Restart and check the array again, as (*arr)[i] might now be conflicting with an earlier value.
+					j = -1; // Restart and check the array again, as (*arr)[i] might now be conflicting with an earlier value.
 				}
-
 	}
+}
 
+template<class T> void fillUniqueRand(unsigned startpos, unsigned count,
+		int min, int max, T (*arr)[]) {
+	for (unsigned i = 0; i < count; ++i) {
+		(*arr)[i] = rand() % (max - min) + min;
+
+		unsigned shiftcount = 0;
+		for (unsigned j = 0; j < i; ++j)
+			if (((*arr)[i]) >= ((*arr)[j])) {
+				++shiftcount;
+			}
+		(*arr)[i] += shiftcount;
+		if ((*arr)[i] >= max) // Readjust into range if necessary.
+			(*arr)[i] = ((*arr)[i] - min) % (max - min) + min;
+		if (shiftcount)
+			for (unsigned j = 0; j < i; ++j)
+				if ((*arr)[i] == (*arr)[j]) {
+					++(*arr)[i];
+					j = -1; // Restart and check the array again, as (*arr)[i] might now be conflicting with an earlier value.
+					if ((*arr)[i] >= max) // Potentially necessary readjustment.
+						(*arr)[i] = ((*arr)[i] - min) % (max - min) + min;
+				}
+	}
 }
 
 #endif /* UTILILTIES_H_ */

@@ -14,11 +14,12 @@
 int main() {
 	srand(time(0));
 
-	for (int i = 0; i < 30; ++i) {
-		unsigned int size = 5;
-		int arr[5];
-		fillWithDistinctRandoms(0, size, 5, 15, (int (*)[]) &arr);
-		std::cout << printArray(size, (int (*)[]) &arr);
+	for (int i = 0; i < 10; ++i) {
+		unsigned int size = 25;
+		int arr[size];
+		fillUniqueRand(0, size, 0, 25, (int (*)[]) &arr);
+		std::cout << "List " << i + 1 << ": "
+				<< printArray(size, (int (*)[]) &arr) << std::endl;
 	}
 	return 0;
 }
