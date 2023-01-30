@@ -16,7 +16,7 @@
 
 struct Problem* StringstreamGenerator::generateRandomProblem() {
 
-	int optionCount = rand() % 3 + 3;
+	unsigned optionCount = rand() % 3 + 3;
 	Problem *problem = (Problem*) malloc(
 			sizeof(struct Problem) + sizeof(char*) * optionCount);
 	problem->optionCount = optionCount;
@@ -27,11 +27,10 @@ struct Problem* StringstreamGenerator::generateRandomProblem() {
 	if (secondVarName >= firstVarName)
 		secondVarName++;
 
-	short options[optionCount] { firstVar * 2 + secondVar };
-	for (unsigned short i = 1; i < optionCount; ++i) {
-		// TODO generate random options and then print them below.
-		options[i] = rand() % 39 - 7;
-	}
+	short options[optionCount];
+	std::cout << options[optionCount - 1];
+	options[0] = firstVar * 2 + secondVar;
+	fillUniqueRand<short>(1, optionCount, -30, 100, (short (*)[]) &options);
 
 	// Calculate sizes.
 	std::stringstream q;
@@ -44,6 +43,10 @@ struct Problem* StringstreamGenerator::generateRandomProblem() {
 			<< ';' << std::endl;
 	q << secondVarName << " += " << firstVarName << "++;" << std::endl;
 	problem->code = flush(&q);
+	for (unsigned i = 0; i < optionCount; i++) {
+		q << options[i];
+		problem->options[i] = flush(&q);
+	}
 
 	return problem;
 }
