@@ -1,30 +1,24 @@
 /*
- * SizedGenerator.h
+ * SizedGenerator.cpp
  *
- *  Created on: Jan 27, 2023
+ *  Created on: Jan 30, 2023
  *      Author: Palanath
  */
 
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
+#include "SizedGenerator.hpp"
 
-#ifndef SIZEDGENERATOR_H_
-#define SIZEDGENERATOR_H_
+#include <cstdlib>
+
+#include "../Common.hpp"
 
 struct String {
 	char *contents;
 	unsigned size;
 };
 
-struct Problem {
-	unsigned optionCount;
-	struct String question, code, footnote, options[];
-};
-
-struct Problem* generateRandomProblem() {
+struct Problem* SizedGenerator::generateRandomProblem() {
 	int options = rand() % 3 + 3;
-	Problem *problem = (Problem*) malloc(
+	struct Problem *problem = (struct Problem*) malloc(
 			sizeof(struct Problem) + sizeof(struct String) * options);
 	problem->optionCount = options;
 
@@ -35,9 +29,7 @@ struct Problem* generateRandomProblem() {
 		secondVarName++;
 
 	// Calculate sizes.
-	char* question = "What is the value of %s when the code finishes executing?";
-
+	char *question = "What is the value of %s when the code finishes executing?";
 
 }
 
-#endif /* SIZEDGENERATOR_H_ */

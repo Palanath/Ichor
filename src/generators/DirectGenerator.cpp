@@ -1,26 +1,17 @@
 /*
- * DirectGenerator.h
+ * DirectGenerator.cpp
  *
- *  Created on: Jan 27, 2023
+ *  Created on: Jan 30, 2023
  *      Author: Palanath
  */
+
+#include "DirectGenerator.hpp"
 
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 
-#ifndef DIRECTGENERATOR_H_
-#define DIRECTGENERATOR_H_
-
-struct Problem {
-	/*
-	 * Used to keep track of the number of options.
-	 */
-	unsigned optionCount;
-	char *question, *code, *footnote,
-	// The correct answer is always stored in the first element.
-			*options[];
-};
+#include "../Common.hpp"
 
 struct Problem* generateRandomProblem() {
 	int randomVar = rand() % 26;
@@ -107,4 +98,3 @@ char* printProblem(const struct Problem *problem, const int openCodeBlockSize,
 	return arr;
 }
 
-#endif /* DIRECTGENERATOR_H_ */
