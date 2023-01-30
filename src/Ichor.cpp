@@ -8,19 +8,21 @@
 
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
 
-#include "Utilities.hpp"
+#include "Common.hpp"
+#include "generators/StringstreamGenerator.hpp"
 
 int main() {
 	srand(time(0));
 
-	for (int i = 0; i < 10; ++i) {
-		unsigned int size = 25;
-		int arr[size];
-		fillUniqueRand(0, size, 0, 25, (int (*)[]) &arr);
-		std::cout << "List " << i + 1 << ": "
-				<< printArray(size, (int (*)[]) &arr) << std::endl;
+	Problem *p = StringstreamGenerator::generateRandomProblem();
+	std::cout << p->question << std::endl << p->code << std::endl << std::endl;
+	for (unsigned i = 0; i < p->optionCount; ++i) {
+		std::cout << '(' << (char) ('A' + i) << ".) " << p->options[i]
+				<< std::endl;
 	}
+
 	return 0;
 }
 
