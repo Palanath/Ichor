@@ -55,7 +55,7 @@ template<class T> void fillWithDistinctRandoms(unsigned int startpos, unsigned i
 
 		bool shifted;
 		for (unsigned int j = 0; j < i; ++j)
-			if ((*arr)[i] >= (*arr)[j]) {
+			if ((*arr)[j] >= (*arr)[i]) {
 				++(*arr)[i]; // Shift variable up because it's >= to a value earlier in list.
 				shifted = true;
 			}
