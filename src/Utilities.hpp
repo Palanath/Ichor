@@ -49,7 +49,7 @@ template<class T> char* printArray(unsigned size, T (*arr)[]) {
  * If max is less than or equal to min, the results are undefined.
  */
 template<class T> void fillWithDistinctRandomElements(unsigned startpos,
-		unsigned count, int min, int max, T (*arr)[]) {
+		unsigned count, T min, T max, T (*arr)[]) {
 	for (unsigned i = 0; i < count; ++i) {
 		(*arr)[i] = rand() % (max - min - i) + min;
 
@@ -69,7 +69,7 @@ template<class T> void fillWithDistinctRandomElements(unsigned startpos,
 }
 
 template<class T> void fillUniqueRand(unsigned startpos, unsigned count,
-		int min, int max, T (*arr)[]) {
+		T min, T max, T (*arr)[]) {
 	for (unsigned i = 0; i < count; ++i) {
 		(*arr)[i] = rand() % (max - min) + min;
 
