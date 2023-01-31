@@ -27,7 +27,6 @@ struct Problem* genMathProblem1() {
 		secondVarName++;
 
 	short options[optionCount];
-	std::cout << options[optionCount - 1];
 	options[0] = firstVar * 2 + secondVar;
 	fillUniqueRand<short>(1, optionCount, -30, 100, (short (*)[]) &options);
 
