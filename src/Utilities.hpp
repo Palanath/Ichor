@@ -82,6 +82,7 @@ template<class T> void fillWithDistinctRandomElements(unsigned startpos,
 /*
  * Fills the specified part of the array with with random values.
  * The indices of the array affected are from startpos to endpos - 1.
+ * The random values generated range between min and max - 1.
  */
 template<class T> void fillUniqueRand(unsigned startpos, unsigned endpos, T min,
 		T max, T (*arr)[]) {
