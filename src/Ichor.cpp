@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <string>
 
 #include "Common.hpp"
 #include "generators/StreamGenerator.hpp"
@@ -18,7 +19,8 @@
 int main() {
 	srand(time(0));
 
-	RESTRT: Problem *p = StringGenerator::generateRandomProblem();
+	RESTRT: clearConsole();
+	Problem *p = StringGenerator::generateRandomProblem();
 	std::cout << p->question << std::endl << p->code << std::endl << std::endl;
 	for (unsigned i = 0; i < p->optionCount; ++i)
 		std::cout << '(' << (char) ('A' + i) << ".) " << p->options[i]
@@ -58,6 +60,10 @@ int main() {
 			std::cout << "That's not correct...";
 		}
 		std::cout << std::endl;
+		std::cout << "Press ENTER to continue...";
+		std::string s;
+		getline(std::cin, s);
+		getline(std::cin, s);
 	}
 
 	for (unsigned i = 0; i < p->optionCount; ++i)
