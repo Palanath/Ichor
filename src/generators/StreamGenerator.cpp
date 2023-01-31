@@ -14,8 +14,7 @@
 #include "../Common.hpp"
 #include "../Utilities.hpp"
 
-struct Problem* StringGenerator::generateRandomProblem() {
-
+struct Problem* genMathProblem1() {
 	unsigned optionCount = rand() % 3 + 3;
 	Problem *problem = (Problem*) malloc(
 			sizeof(struct Problem) + sizeof(char*) * optionCount);
@@ -49,5 +48,9 @@ struct Problem* StringGenerator::generateRandomProblem() {
 	}
 
 	return problem;
+}
+
+struct Problem* StringGenerator::generateRandomProblem() {
+	return genMathProblem1();
 }
 
