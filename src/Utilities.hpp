@@ -8,6 +8,10 @@
 #ifndef UTILILTIES_H_
 #define UTILILTIES_H_
 
+#define CONSOLE_RED "\033[31m"
+#define CONSOLE_GREEN "\033[32m"
+#define CONSOLE_RESET "\033[0m"
+
 #include <cstdlib>
 #include <iostream>
 #include <sstream>
@@ -98,5 +102,7 @@ template<class T> void fillUniqueRand(unsigned startpos, unsigned endpos, T min,
 				}
 	}
 }
+
+void clearConsole();
 
 #endif /* UTILILTIES_H_ */
