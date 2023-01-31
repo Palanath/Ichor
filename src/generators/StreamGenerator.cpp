@@ -5,7 +5,7 @@
  *      Author: Palanath
  */
 
-#include "StringstreamGenerator.hpp"
+#include "StreamGenerator.hpp"
 
 #include <cstdlib>
 #include <iostream>

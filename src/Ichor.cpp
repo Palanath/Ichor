@@ -11,7 +11,7 @@
 #include <iostream>
 
 #include "Common.hpp"
-#include "generators/StringstreamGenerator.hpp"
+#include "generators/StreamGenerator.hpp"
 
 int main() {
 	srand(time(0));
