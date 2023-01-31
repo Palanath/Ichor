@@ -14,12 +14,8 @@
 #include "../Common.hpp"
 #include "../Utilities.hpp"
 
-struct Problem* StringGenerator::generateRandomProblem() {
-
-	unsigned optionCount = rand() % 3 + 3;
-	Problem *problem = (Problem*) malloc(
-			sizeof(struct Problem) + sizeof(char*) * optionCount);
-	problem->optionCount = optionCount;
+struct Problem* genMathProblem1() {
+	Problem *problem = genProblem(rand() % 3 + 3);
 
 	// Generate randoms.
 	short firstVar = rand() % 39 - 7, secondVar = rand() % 39 - 7;
@@ -27,12 +23,12 @@ struct Problem* StringGenerator::generateRandomProblem() {
 	if (secondVarName >= firstVarName)
 		secondVarName++;
 
-	short options[optionCount];
-	std::cout << options[optionCount - 1];
+	short options[problem->optionCount];
 	options[0] = firstVar * 2 + secondVar;
-	fillUniqueRand<short>(1, optionCount, -30, 100, (short (*)[]) &options);
+	fillUniqueRand<short>(1, problem->optionCount, -30, 100,
+			(short (*)[]) &options);
 
-	// Calculate sizes.
+	// Generate questions.
 	std::stringstream q;
 	q << "What is the value of the variable, " << secondVarName
 			<< ", when the following code finishes executing?";
@@ -43,11 +39,40 @@ struct Problem* StringGenerator::generateRandomProblem() {
 			<< ';' << std::endl;
 	q << secondVarName << " += " << firstVarName << "++;" << std::endl;
 	problem->code = flush(&q);
-	for (unsigned i = 0; i < optionCount; i++) {
+	for (unsigned i = 0; i < problem->optionCount; i++) {
 		q << options[i];
 		problem->options[i] = flush(&q);
 	}
 
 	return problem;
+}
+
+struct Problem* genCharLiteralProblem1() {
+	Problem *problem = genProblem((rand() % 2 + 2) * 2);
+
+	//Generate random stuff.
+	char arr[problem->optionCount / 2];
+	fillUniqueRand(0, 3, 'a', 'z', (char (*)[]) &arr);
+	char varname = rand() % 26 + 'a';
+
+	// Populate problem.
+	std::stringstream q;
+	for (unsigned i = 0; i < problem->optionCount / 2; ++i) {
+		q << (int) arr[i * 2];
+		problem->options[i * 2] = flush(&q);
+		q << arr[i * 2];
+		problem->options[i * 2 + 1] = flush(&q);
+	}
+	q
+			<< "Which of the following is printed as a result of running the following code?";
+	problem->question = flush(&q);
+	q << "auto " << varname << " = +'" << arr[0] << "';" << std::endl
+			<< "cout << " << varname << ';';
+	problem->code = flush(&q);
+	return problem;
+}
+
+struct Problem* StringGenerator::generateRandomProblem() {
+	return rand() % 2 ? genMathProblem1() : genCharLiteralProblem1();
 }
 
