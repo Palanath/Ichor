@@ -7,10 +7,18 @@
 
 #include "Utilities.hpp"
 
-#include <cstdlib>
 #include <cstring>
 #include <sstream>
 #include <string>
+
+#include "Common.hpp"
+
+struct Problem* genProblem(unsigned optionCount) {
+	Problem *p = (Problem*) malloc(
+			sizeof(Problem) + sizeof(char*) * optionCount);
+	p->optionCount = optionCount;
+	return p;
+}
 
 char* flushraw(std::stringstream *stream) {
 	auto size = stream->tellp();

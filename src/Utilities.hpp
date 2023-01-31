@@ -15,6 +15,13 @@
 struct Problem;
 
 /*
+ * Mallocs a Problem struct that has the specified number of options.
+ *
+ * The struct's optionCount member is set to the specified optionCount.
+ */
+struct Problem* genProblem(unsigned optionCount);
+
+/*
  * This function appends the null-terminator to the specified stream, malloc()s a new char[], and copies the contents of the specified stream to it, then clears the stream.
  *
  * This implementation appends std::ends to the stream (via (*stream)<<std::ends;) and then calls and returns the result of flushraw(stream);.
