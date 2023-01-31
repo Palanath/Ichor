@@ -52,15 +52,10 @@ int main() {
 				std::cout << CONSOLE_RESET;
 			std::cout << std::endl;
 		}
-		std::cout << std::endl;
-		if (c == correctAnswerPos) {
-			// Correct answer selected.
-			std::cout << "You answered right!";
-		} else {
-			std::cout << "That's not correct...";
-		}
-		std::cout << std::endl;
-		std::cout << "Press ENTER to continue...";
+		std::cout << std::endl
+				<< (c == correctAnswerPos ?
+						"You answered right!" : "That's not correct...")
+				<< std::endl << "Press ENTER to continue...";
 		std::string s;
 		getline(std::cin, s);
 		getline(std::cin, s);
