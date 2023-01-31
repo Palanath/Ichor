@@ -58,9 +58,9 @@ struct Problem* genCharLiteralProblem1() {
 	// Populate problem.
 	std::stringstream q;
 	for (unsigned i = 0; i < problem->optionCount / 2; ++i) {
-		q << arr[i * 2];
-		problem->options[i * 2] = flush(&q);
 		q << (int) arr[i * 2];
+		problem->options[i * 2] = flush(&q);
+		q << arr[i * 2];
 		problem->options[i * 2 + 1] = flush(&q);
 	}
 	q
