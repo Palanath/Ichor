@@ -15,10 +15,7 @@
 #include "../Utilities.hpp"
 
 struct Problem* genMathProblem1() {
-	unsigned optionCount = rand() % 3 + 3;
-	Problem *problem = (Problem*) malloc(
-			sizeof(struct Problem) + sizeof(char*) * optionCount);
-	problem->optionCount = optionCount;
+	Problem *problem = genProblem(rand() % 3 + 3);
 
 	// Generate randoms.
 	short firstVar = rand() % 39 - 7, secondVar = rand() % 39 - 7;
@@ -26,11 +23,12 @@ struct Problem* genMathProblem1() {
 	if (secondVarName >= firstVarName)
 		secondVarName++;
 
-	short options[optionCount];
+	short options[problem->optionCount];
 	options[0] = firstVar * 2 + secondVar;
-	fillUniqueRand<short>(1, optionCount, -30, 100, (short (*)[]) &options);
+	fillUniqueRand<short>(1, problem->optionCount, -30, 100,
+			(short (*)[]) &options);
 
-	// Calculate sizes.
+	// Generate questions.
 	std::stringstream q;
 	q << "What is the value of the variable, " << secondVarName
 			<< ", when the following code finishes executing?";
@@ -41,12 +39,17 @@ struct Problem* genMathProblem1() {
 			<< ';' << std::endl;
 	q << secondVarName << " += " << firstVarName << "++;" << std::endl;
 	problem->code = flush(&q);
-	for (unsigned i = 0; i < optionCount; i++) {
+	for (unsigned i = 0; i < problem->optionCount; i++) {
 		q << options[i];
 		problem->options[i] = flush(&q);
 	}
 
 	return problem;
+}
+
+struct Problem* genMathProblem2() {
+	Problem *problem = genProblem(rand() % 2 + 4);
+	//Generate random stuff.
 }
 
 struct Problem* StringGenerator::generateRandomProblem() {
