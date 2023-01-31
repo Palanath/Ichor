@@ -47,12 +47,32 @@ struct Problem* genMathProblem1() {
 	return problem;
 }
 
-struct Problem* genMathProblem2() {
-	Problem *problem = genProblem(rand() % 2 + 4);
+struct Problem* genCharLiteralProblem1() {
+	Problem *problem = genProblem((rand() % 2 + 2) * 2);
+
 	//Generate random stuff.
+	char arr[problem->optionCount / 2];
+	fillUniqueRand(0, 3, 'a', 'z', (char (*)[]) &arr);
+	char varname = rand() % 26 + 'a';
+
+	// Populate problem.
+	std::stringstream q;
+	for (unsigned i = 0; i < problem->optionCount / 2; ++i) {
+		q << arr[i];
+		problem->options[i] = flush(&q);
+		q << (int) arr[i];
+		problem->options[i + 1] = flush(&q);
+	}
+	q
+			<< "Which of the following is printed as a result of running the following code?";
+	problem->question = flush(&q);
+	q << "auto " << varname << " = +'" << arr[0] << "';" << std::endl
+			<< "cout << " << varname << ';';
+	problem->code = flush(&q);
+	return problem;
 }
 
 struct Problem* StringGenerator::generateRandomProblem() {
-	return genMathProblem1();
+	return rand() % 2 ? genMathProblem1() : genCharLiteralProblem1();
 }
 
