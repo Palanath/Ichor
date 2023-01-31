@@ -52,7 +52,8 @@ struct Problem* genCharLiteralProblem1() {
 
 	//Generate random stuff.
 	char arr[problem->optionCount / 2];
-	fillUniqueRand(0, 3, 'a', 'z', (char (*)[]) &arr);
+	fillUniqueRand(0, problem->optionCount / 2, 'a', char('z' + 1),
+			(char (*)[]) &arr);
 	char varname = rand() % 26 + 'a';
 
 	// Populate problem.
