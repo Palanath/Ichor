@@ -16,7 +16,7 @@
 int main() {
 	srand(time(0));
 
-	Problem *p = StringstreamGenerator::generateRandomProblem();
+	Problem *p = StringGenerator::generateRandomProblem();
 	std::cout << p->question << std::endl << p->code << std::endl << std::endl;
 	for (unsigned i = 0; i < p->optionCount; ++i) {
 		std::cout << '(' << (char) ('A' + i) << ".) " << p->options[i]

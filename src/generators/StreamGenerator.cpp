@@ -14,7 +14,7 @@
 #include "../Common.hpp"
 #include "../Utilities.hpp"
 
-struct Problem* StringstreamGenerator::generateRandomProblem() {
+struct Problem* StringGenerator::generateRandomProblem() {
 
 	unsigned optionCount = rand() % 3 + 3;
 	Problem *problem = (Problem*) malloc(
