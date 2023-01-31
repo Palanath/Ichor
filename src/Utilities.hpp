@@ -66,9 +66,8 @@ template<class T> void fillWithDistinctRandomElements(unsigned startpos,
 
 		unsigned shiftcount = 0;
 		for (unsigned j = startpos; j < i; ++j)
-			if (((*arr)[i]) >= ((*arr)[j])) {
+			if (((*arr)[i]) >= ((*arr)[j]))
 				++shiftcount;
-			}
 		(*arr)[i] += shiftcount;
 		if (shiftcount)
 			for (unsigned j = startpos; j < i; ++j)
@@ -91,9 +90,8 @@ template<class T> void fillUniqueRand(unsigned startpos, unsigned endpos, T min,
 
 		unsigned shiftcount = 0;
 		for (unsigned j = startpos; j < i; ++j)
-			if (((*arr)[i]) >= ((*arr)[j])) {
+			if (((*arr)[i]) >= ((*arr)[j]))
 				++shiftcount;
-			}
 		(*arr)[i] += shiftcount;
 		if ((*arr)[i] >= max) // Readjust into range if necessary.
 			(*arr)[i] = ((*arr)[i] - min) % (max - min) + min;
