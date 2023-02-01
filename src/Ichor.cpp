@@ -38,7 +38,7 @@ int main() {
 		;
 	if (c <= '9' && c >= '1')
 		c -= '1';
-	else
+	else if (c != EOF)
 		c -= 'a';
 	if (c != EOF) {
 		clearConsole();
@@ -47,8 +47,10 @@ int main() {
 		for (unsigned i = 0; i < p->optionCount; ++i) {
 			if (i == correctAnswerPos)
 				std::cout << CONSOLE_GREEN;
+			else if (i == c)
+				std::cout << CONSOLE_RED;
 			std::cout << '(' << (char) ('A' + i) << ".) " << p->options[i];
-			if (i == correctAnswerPos)
+			if (i == correctAnswerPos || i == c)
 				std::cout << CONSOLE_RESET;
 			std::cout << std::endl;
 		}
