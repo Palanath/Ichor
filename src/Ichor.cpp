@@ -70,6 +70,10 @@ int main() {
 
 	for (unsigned i = 0; i < p->optionCount; ++i)
 		free(p->options[i]);
+	free(p->question);
+	free(p->code);
+	if (p->footnote != nullptr)
+		free(p->footnote);
 	free(p);
 	free(optionsCopy);
 
