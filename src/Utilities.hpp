@@ -110,14 +110,23 @@ template<class T> void fillUniqueRand(unsigned startpos, unsigned endpos, T min,
 void clearConsole();
 
 /*
+ * Shuffles the provided array.
+ * This function works by calling std::swap() on every element in the array paired with a random other element in the array.
+ */
+template<class T> void shuffle(unsigned length, T (*arr)[]) {
+	for (unsigned i = 0; i < length; ++i)
+		std::swap((*arr)[i], (*arr)[rand() % length]);
+}
+
+/*
  * Mallocs a new array of appropriate size and copies all the bytes of the given array to it.
  * A pointer to the new array is returned.
  */
 template<class T> T (* copy(unsigned length, T (*arr)[]))[] {
-	unsigned lenbytes = sizeof(T) * lenbytes;
-	T (*cp)[length] = (T (*)[length]) malloc(lenbytes);
-	memcpy(cp, arr, lenbytes);
-	return cp;
-}
+			unsigned lenbytes = sizeof(T) * lenbytes;
+			T (*cp)[length] = (T (*)[length]) malloc(lenbytes);
+			memcpy(cp, arr, lenbytes);
+			return cp;
+		}
 
 #endif /* UTILILTIES_H_ */
