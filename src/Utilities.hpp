@@ -15,6 +15,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <sstream>
+#include <cstring>
 
 struct Problem;
 
@@ -107,5 +108,16 @@ template<class T> void fillUniqueRand(unsigned startpos, unsigned endpos, T min,
 }
 
 void clearConsole();
+
+/*
+ * Mallocs a new array of appropriate size and copies all the bytes of the given array to it.
+ * A pointer to the new array is returned.
+ */
+template<class T> T (* copy(unsigned length, T (*arr)[]))[] {
+	unsigned lenbytes = sizeof(T) * lenbytes;
+	T (*cp)[length] = (T (*)[length]) malloc(lenbytes);
+	memcpy(cp, arr, lenbytes);
+	return cp;
+}
 
 #endif /* UTILILTIES_H_ */
