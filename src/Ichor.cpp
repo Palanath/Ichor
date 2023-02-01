@@ -7,13 +7,11 @@
 //============================================================================
 
 #include <bits/move.h>
-#include <bits/stl_pair.h>
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
 #include <string>
-#include <type_traits>
 
 #include "Common.hpp"
 #include "generators/StreamGenerator.hpp"
@@ -27,7 +25,7 @@ int main() {
 
 	auto optionsCopy = copy(p->optionCount, (char*(*)[]) p->options);
 	shuffle(1, p->optionCount, optionsCopy); // Shuffle all but first element.
-	unsigned correctAnswerPos = rand()%p->optionCount;
+	unsigned correctAnswerPos = rand() % p->optionCount;
 	std::swap((*optionsCopy)[0], (*optionsCopy)[correctAnswerPos]);
 
 	std::cout << p->question << std::endl << p->code << std::endl << std::endl;
