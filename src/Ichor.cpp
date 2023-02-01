@@ -6,18 +6,18 @@
 // Description : Ichor in C++, Ansi-style
 //============================================================================
 
+#include <bits/move.h>
+#include <bits/stl_pair.h>
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
 #include <string>
+#include <type_traits>
 
 #include "Common.hpp"
 #include "generators/StreamGenerator.hpp"
 #include "Utilities.hpp"
-
-void coutstrings(char (*strs)[]) {
-}
 
 int main() {
 	srand(time(0));
@@ -25,9 +25,10 @@ int main() {
 	RESTRT: clearConsole();
 	auto p = StringGenerator::generateRandomProblem();
 
-	unsigned correctAnswerPos = 0;
 	auto optionsCopy = copy(p->optionCount, (char*(*)[]) p->options);
-	shuffle(p->optionCount, optionsCopy);
+	shuffle(1, p->optionCount, optionsCopy); // Shuffle all but first element.
+	unsigned correctAnswerPos = rand()%p->optionCount;
+	std::swap((*optionsCopy)[0], (*optionsCopy)[correctAnswerPos]);
 
 	std::cout << p->question << std::endl << p->code << std::endl << std::endl;
 	for (unsigned i = 0; i < p->optionCount; ++i)
