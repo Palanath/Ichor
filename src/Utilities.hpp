@@ -21,8 +21,9 @@ struct Problem;
 
 /*
  * Mallocs a Problem struct that has the specified number of options.
+ * The footnote member, which is does not need to be specified, is set to nullptr, and the struct's optionCount member is set to the specified optionCount.
  *
- * The struct's optionCount member is set to the specified optionCount.
+ * All other members are uninitialized and will need to be initialized by the caller.
  */
 struct Problem* genProblem(unsigned optionCount);
 
@@ -37,13 +38,13 @@ char* flush(std::stringstream *stream);
  */
 char* flushraw(std::stringstream *stream);
 
-template<class T> char* printArray(unsigned size, T (*arr)[]) {
+template<class T> char* printArray(unsigned size, T arr[]) {
 	std::stringstream b;
 	b << '[';
 	if (size) {
 		for (unsigned i = 0; i < size - 1; ++i)
-			b << (*arr)[i] << ", ";
-		b << (*arr)[size - 1];
+			b << arr[i] << ", ";
+		b << arr[size - 1];
 	}
 	b << ']';
 	return flush(&b);
@@ -61,20 +62,20 @@ template<class T> char* printArray(unsigned size, T (*arr)[]) {
  * If max is less than or equal to min, the results are undefined.
  */
 template<class T> void fillWithDistinctRandomElements(unsigned startpos,
-		unsigned endpos, T min, T max, T (*arr)[]) {
+		unsigned endpos, T min, T max, T arr[]) {
 	for (unsigned i = startpos; i < endpos; ++i) {
-		(*arr)[i] = rand() % (max - min - i) + min;
+		arr[i] = rand() % (max - min - i) + min;
 
 		unsigned shiftcount = 0;
 		for (unsigned j = startpos; j < i; ++j)
-			if (((*arr)[i]) >= ((*arr)[j]))
+			if ((arr[i]) >= (arr[j]))
 				++shiftcount;
-		(*arr)[i] += shiftcount;
+		arr[i] += shiftcount;
 		if (shiftcount)
 			for (unsigned j = startpos; j < i; ++j)
-				if ((*arr)[i] == (*arr)[j]) {
-					++(*arr)[i];
-					j = -1; // Restart and check the array again, as (*arr)[i] might now be conflicting with an earlier value.
+				if (arr[i] == arr[j]) {
+					++arr[i];
+					j = -1; // Restart and check the array again, as arr[i] might now be conflicting with an earlier value.
 				}
 	}
 }
@@ -85,24 +86,24 @@ template<class T> void fillWithDistinctRandomElements(unsigned startpos,
  * The random values generated range between min and max - 1.
  */
 template<class T> void fillUniqueRand(unsigned startpos, unsigned endpos, T min,
-		T max, T (*arr)[]) {
+		T max, T arr[]) {
 	for (unsigned i = startpos; i < endpos; ++i) {
-		(*arr)[i] = rand() % (max - min) + min;
+		arr[i] = rand() % (max - min) + min;
 
 		unsigned shiftcount = 0;
 		for (unsigned j = startpos; j < i; ++j)
-			if (((*arr)[i]) >= ((*arr)[j]))
+			if ((arr[i]) >= (arr[j]))
 				++shiftcount;
-		(*arr)[i] += shiftcount;
-		if ((*arr)[i] >= max) // Readjust into range if necessary.
-			(*arr)[i] = ((*arr)[i] - min) % (max - min) + min;
+		arr[i] += shiftcount;
+		if (arr[i] >= max) // Readjust into range if necessary.
+			arr[i] = (arr[i] - min) % (max - min) + min;
 		if (shiftcount)
 			for (unsigned j = startpos; j < i; ++j)
-				if ((*arr)[i] == (*arr)[j]) {
-					++(*arr)[i];
-					j = -1; // Restart and check the array again, as (*arr)[i] might now be conflicting with an earlier value.
-					if ((*arr)[i] >= max) // Potentially necessary readjustment.
-						(*arr)[i] = ((*arr)[i] - min) % (max - min) + min;
+				if (arr[i] == arr[j]) {
+					++arr[i];
+					j = -1; // Restart and check the array again, as arr[i] might now be conflicting with an earlier value.
+					if (arr[i] >= max) // Potentially necessary readjustment.
+						arr[i] = (arr[i] - min) % (max - min) + min;
 				}
 	}
 }
@@ -113,30 +114,29 @@ void clearConsole();
  * Shuffles the array from the element at startpoint to the element before endpoint.
  */
 template<class T> void shuffle(unsigned startpoint, unsigned endpoint,
-		T (*arr)[]) {
+		T arr[]) {
 	for (unsigned i = startpoint; i < endpoint; ++i)
-		std::swap((*arr)[i],
-				(*arr)[rand() % (endpoint - startpoint) + startpoint]);
+		std::swap(arr[i], arr[rand() % (endpoint - startpoint) + startpoint]);
 }
 
 /*
  * Shuffles the provided array.
  * This function works by calling std::swap() on every element in the array paired with a random other element in the array.
  */
-template<class T> void shuffle(unsigned length, T (*arr)[]) {
+template<class T> void shuffle(unsigned length, T arr[]) {
 	for (unsigned i = 0; i < length; ++i)
-		std::swap((*arr)[i], (*arr)[rand() % length]);
+		std::swap(arr[i], arr[rand() % length]);
 }
 
 /*
  * Mallocs a new array of appropriate size and copies all the bytes of the given array to it.
  * A pointer to the new array is returned.
  */
-template<class T> T (* copy(unsigned length, T (*arr)[]))[] {
-			unsigned lenbytes = sizeof(T) * length;
-			T (*cp)[length] = (T (*)[length]) malloc(lenbytes);
-			memcpy(cp, arr, lenbytes);
-			return cp;
-		}
+template<class T> T* copy(unsigned length, T arr[]) {
+	unsigned lenbytes = sizeof(T) * length;
+	T *cp = (T*) malloc(lenbytes);
+	memcpy(cp, arr, lenbytes);
+	return cp;
+}
 
 #endif /* UTILILTIES_H_ */

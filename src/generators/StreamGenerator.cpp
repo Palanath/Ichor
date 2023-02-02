@@ -25,8 +25,7 @@ struct Problem* genMathProblem1() {
 
 	short options[problem->optionCount];
 	options[0] = firstVar * 2 + secondVar;
-	fillUniqueRand<short>(1, problem->optionCount, -30, 100,
-			(short (*)[]) &options);
+	fillUniqueRand<short>(1, problem->optionCount, -30, 100, options);
 
 	// Generate questions.
 	std::stringstream q;
@@ -52,8 +51,7 @@ struct Problem* genCharLiteralProblem1() {
 
 	//Generate random stuff.
 	char arr[problem->optionCount / 2];
-	fillUniqueRand(0, problem->optionCount / 2, 'a', char('z' + 1),
-			(char (*)[]) &arr);
+	fillUniqueRand(0, problem->optionCount / 2, 'a', char('z' + 1), arr);
 	char varname = rand() % 26 + 'a';
 
 	// Populate problem.
@@ -71,6 +69,18 @@ struct Problem* genCharLiteralProblem1() {
 			<< "cout << " << varname << ';';
 	problem->code = flush(&q);
 	return problem;
+}
+
+struct Problem* genCommaOpTrick1() {
+	Problem *problem = genProblem(4);
+	unsigned short n1 = rand() % 7, n2 = rand() % 7;
+
+	const char question[] = "What does following program print?";
+	problem->question = (char*) malloc(sizeof(question));
+	strcpy(problem->question, question);
+	std::stringstream q;
+	// Generate random data needed.
+
 }
 
 struct Problem* StringGenerator::generateRandomProblem() {
