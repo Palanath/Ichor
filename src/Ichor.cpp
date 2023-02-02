@@ -29,6 +29,8 @@ int main() {
 	std::swap(optionsCopy[0], optionsCopy[correctAnswerPos]);
 
 	std::cout << p->question << std::endl << p->code << std::endl << std::endl;
+	if (p->footnote != nullptr)
+		std::cout << p->footnote << std::endl;
 	for (unsigned i = 0; i < p->optionCount; ++i)
 		std::cout << '(' << (char) ('A' + i) << ".) " << optionsCopy[i]
 				<< std::endl;
@@ -49,6 +51,8 @@ int main() {
 		clearConsole();
 		std::cout << p->question << std::endl << p->code << std::endl
 				<< std::endl;
+		if (p->footnote != nullptr)
+			std::cout << p->footnote << std::endl;
 		for (unsigned i = 0; i < p->optionCount; ++i) {
 			if (i == correctAnswerPos)
 				std::cout << CONSOLE_GREEN;
