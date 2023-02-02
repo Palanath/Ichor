@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <sstream>
 #include <string>
 
 #include "Common.hpp"
@@ -27,9 +28,7 @@ int main() {
 	unsigned correctAnswerPos = rand() % p->optionCount;
 	std::swap(optionsCopy[0], optionsCopy[correctAnswerPos]);
 
-	std::cout << p->question << std::endl << p->code << std::endl << std::endl;
-	if (p->footnote != nullptr)
-		std::cout << p->footnote << std::endl;
+	prompt(&std::cout, p);
 	for (unsigned i = 0; i < p->optionCount; ++i)
 		std::cout << '(' << (char) ('A' + i) << ".) " << optionsCopy[i]
 				<< std::endl;
@@ -48,10 +47,7 @@ int main() {
 		c -= 'a';
 	if (c != EOF) {
 		clearConsole();
-		std::cout << p->question << std::endl << p->code << std::endl
-				<< std::endl;
-		if (p->footnote != nullptr)
-			std::cout << p->footnote << std::endl;
+		prompt(&std::cout, p);
 		for (unsigned i = 0; i < p->optionCount; ++i) {
 			if (i == correctAnswerPos)
 				std::cout << CONSOLE_GREEN;

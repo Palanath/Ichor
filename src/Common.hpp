@@ -8,6 +8,8 @@
 #ifndef COMMON_H_
 #define COMMON_H_
 
+#include <iostream>
+
 struct Problem {
 	unsigned optionCount;
 	char *question, *code, *footnote = nullptr, *options[];
@@ -20,5 +22,11 @@ struct Problem {
  * All other members are uninitialized and will need to be initialized by the caller.
  */
 struct Problem* genProblem(unsigned optionCount);
+
+template<typename Printable> void prompt(Printable* output, struct Problem* p) {
+	*output << p->question << std::endl << p->code << std::endl << std::endl;
+	if (p->footnote != nullptr)
+		*output << p->footnote << std::endl;
+}
 
 #endif /* COMMON_H_ */
