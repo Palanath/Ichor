@@ -73,6 +73,7 @@ struct Problem* genCharLiteralProblem1() {
 
 struct Problem* genCommaOpTrick1() {
 	Problem *problem = genProblem(4);
+
 	unsigned short n1 = rand() % 7, n2 = rand() % 7;
 	if (n2 == n1)
 		n2 = (n2 + 1) % 7;
@@ -82,12 +83,10 @@ struct Problem* genCommaOpTrick1() {
 	var1 += 'a';
 	var2 += 'a';
 
-	const char question[] =
-			"What is the value of the expression (x + y) after the following code executes?";
-	problem->question = (char*) malloc(sizeof(question));
-	strcpy(problem->question, question);
 	std::stringstream q;
-	// Generate random data needed.
+	q << "What is the value of the expression (" << var1 << " + " << var2
+			<< ") after the following code executes?";
+	problem->question = flush(&q);
 	q << "int " << var1 << " = 0, " << var2 << " = 0;" << std::endl << '('
 			<< var1 << ", " << var2 << ") = (" << n1 << ", " << n2 << ");";
 
