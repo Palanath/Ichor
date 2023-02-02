@@ -102,16 +102,89 @@ struct Problem* genCommaOpTrick1() {
 
 	return problem;
 }
+/*
+ * Picks a random type suitable for use in FunctionCallProblem1 based on the specified value.
+ * The void type is selected using the argument 0. The largest acceptable input value for this function is 14, which will return long double.
+ * Values above that will all return char.
+ */
+const char* functionCallProblem1_pickType(unsigned type) {
+	switch (type) {
+	case 0:
+		return "void";
+	case 1:
+		return "int";
+	case 2:
+		return "short";
+	case 3:
+		return "char";
+	case 4:
+		return "bool";
+	case 5:
+		return "float";
+	case 6:
+		return "double";
+	case 7:
+		return "signed char";
+	case 8:
+		return "unsigned char";
+	case 9:
+		return "unsigned int";
+	case 10:
+		return "short int";
+	case 11:
+		return "long int";
+	case 12:
+		return "unsigned short int";
+	case 13:
+		return "unsigned long int";
+	case 14:
+		return "long double";
+	}
+	return "char";
+}
+struct Problem* genFunctionCallProblem1() {
+	Problem *p = genProblem(5);
+	std::stringstream q;
+	q
+			<< "Which of the following declares a function that CANNOT be called like so:";
+	p->question = flush(&q);
+	q << "// Function call:" << std::endl << "func(1);";
+	p->code = flush(&q);
+
+	// This problem is primarily meant to allow the user to learn that func() {} can take any number of args, whereas func(void) can't take any.
+
+	bool returnTypeVaries = rand() % 2;
+	unsigned types[5] = { 0 };
+	fillUniqueRand<unsigned>(1, 5, 1, 15, types);
+
+	for (unsigned i = 0; i < 5; ++i) {
+
+		// Ret type
+		if (returnTypeVaries)
+			q << functionCallProblem1_pickType(rand() % 15);
+		else
+			q << "void";
+		// Param type
+		q << " func(" << functionCallProblem1_pickType(types[i]) << ");";
+		p->options[i] = flush(&q);
+	}
+	q
+			<< "Note that a function definitions have bodies (e.g. void f(int x) {}), whereas function declarations do not (e.g. void f(int);).";
+	p->footnote = flush(&q);
+	return p;
+}
 
 struct Problem* StringGenerator::generateRandomProblem() {
-	switch (rand() % 3) {
+	switch (rand() % 4) {
 	case 0:
 		return genMathProblem1();
 	case 1:
 		return genCharLiteralProblem1();
 	case 2:
 		return genCommaOpTrick1();
+	case 3:
+		return genFunctionCallProblem1();
 	}
-	return rand() % 2 ? genMathProblem1() : genCharLiteralProblem1();
+	return genMathProblem1();
 }
 
