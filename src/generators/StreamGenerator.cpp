@@ -73,8 +73,11 @@ struct Problem* genCharLiteralProblem1() {
 
 struct Problem* genCommaOpTrick1() {
 	Problem *problem = genProblem(4);
-	// TODO Make n1 and n2 always different. (This is required o/w two answer choices will be the same.)
 	unsigned short n1 = rand() % 7, n2 = rand() % 7;
+	if (n2 == n1)
+		n2 = (n2 + 1) % 7;
+	n1++; // Shift range up from 0-7 to 1-8.
+	n2++; // ^
 	char var1 = rand() % 26, var2 = (var1 + 1) % 26;
 	var1 += 'a';
 	var2 += 'a';
