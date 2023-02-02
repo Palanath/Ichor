@@ -91,13 +91,13 @@ struct Problem* genCommaOpTrick1() {
 			<< var1 << ", " << var2 << ") = (" << n1 << ", " << n2 << ");";
 
 	problem->code = flush(&q);
-	q << "C. " << n2;
+	q << n2;
 	problem->options[0] = flush(&q);
-	q << "A. 0";
+	q << "0";
 	problem->options[1] = flush(&q);
-	q << "B. " << n1;
+	q << n1;
 	problem->options[2] = flush(&q);
-	q << "D. " << n1 + n2;
+	q << n1 + n2;
 	problem->options[3] = flush(&q);
 
 	return problem;
