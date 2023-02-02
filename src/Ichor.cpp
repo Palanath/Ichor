@@ -23,14 +23,14 @@ int main() {
 	RESTRT: clearConsole();
 	auto p = StringGenerator::generateRandomProblem();
 
-	auto optionsCopy = copy(p->optionCount, (char*(*)[]) p->options);
+	char **optionsCopy = copy(p->optionCount, p->options);
 	shuffle(1, p->optionCount, optionsCopy); // Shuffle all but first element.
 	unsigned correctAnswerPos = rand() % p->optionCount;
-	std::swap((*optionsCopy)[0], (*optionsCopy)[correctAnswerPos]);
+	std::swap(optionsCopy[0], optionsCopy[correctAnswerPos]);
 
 	std::cout << p->question << std::endl << p->code << std::endl << std::endl;
 	for (unsigned i = 0; i < p->optionCount; ++i)
-		std::cout << '(' << (char) ('A' + i) << ".) " << (*optionsCopy)[i]
+		std::cout << '(' << (char) ('A' + i) << ".) " << optionsCopy[i]
 				<< std::endl;
 
 	std::cout << std::endl << "You may use number keys 1-"
@@ -54,7 +54,7 @@ int main() {
 				std::cout << CONSOLE_GREEN;
 			else if (i == c)
 				std::cout << CONSOLE_RED;
-			std::cout << '(' << (char) ('A' + i) << ".) " << (*optionsCopy)[i];
+			std::cout << '(' << (char) ('A' + i) << ".) " << optionsCopy[i];
 			if (i == correctAnswerPos || i == c)
 				std::cout << CONSOLE_RESET;
 			std::cout << std::endl;
@@ -76,6 +76,8 @@ int main() {
 		free(p->footnote);
 	free(p);
 	free(optionsCopy);
+
+	std::cout << c;
 
 	if (c != EOF)
 		goto RESTRT;
