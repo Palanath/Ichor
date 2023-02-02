@@ -91,11 +91,11 @@ struct Problem* genCommaOpTrick1() {
 	q << "int " << var1 << " = 0, " << var2 << " = 0;" << std::endl << '('
 			<< var1 << ", " << var2 << ") = (" << n1 << ", " << n2 << ");";
 
-	problem->options[1] = flush(&q);
-	q << "C. " << n2;
 	problem->code = flush(&q);
-	q << "A. 0";
+	q << "C. " << n2;
 	problem->options[0] = flush(&q);
+	q << "A. 0";
+	problem->options[1] = flush(&q);
 	q << "B. " << n1;
 	problem->options[2] = flush(&q);
 	q << "D. " << n1 + n2;
