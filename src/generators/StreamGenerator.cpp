@@ -73,17 +73,41 @@ struct Problem* genCharLiteralProblem1() {
 
 struct Problem* genCommaOpTrick1() {
 	Problem *problem = genProblem(4);
+	// TODO Make n1 and n2 always different.
 	unsigned short n1 = rand() % 7, n2 = rand() % 7;
+	char var1 = rand() % 26, var2 = (var1 + 1) % 26;
+	var1 += 'a';
+	var2 += 'a';
 
 	const char question[] = "What does following program print?";
 	problem->question = (char*) malloc(sizeof(question));
 	strcpy(problem->question, question);
 	std::stringstream q;
 	// Generate random data needed.
+	q << "int " << var1 << ", " << var2 << ';' << std::endl << '(' << var1
+			<< ", " << var2 << ") = (" << n1 << ", " << n2 << ");";
+	problem->code = flush(&q);
+	q << "A. 0";
+	problem->options[0] = flush(&q);
+	q << "B. " << n1;
+	problem->options[1] = flush(&q);
+	q << "C. " << n2;
+	problem->options[2] = flush(&q);
+	q << "D. " << n1 + n2;
+	problem->options[3] = flush(&q);
 
+	return problem;
 }
 
 struct Problem* StringGenerator::generateRandomProblem() {
+	switch (rand() % 3) {
+	case 0:
+		return genMathProblem1();
+	case 1:
+		return genCharLiteralProblem1();
+	case 2:
+		return genCommaOpTrick1();
+	}
 	return rand() % 2 ? genMathProblem1() : genCharLiteralProblem1();
 }
 
