@@ -7,19 +7,8 @@
 
 #include "Utilities.hpp"
 
-#include <cstring>
-#include <sstream>
 #include <string>
 
-#include "Common.hpp"
-
-struct Problem* genProblem(unsigned optionCount) {
-	Problem *p = (Problem*) malloc(
-			sizeof(Problem) + sizeof(char*) * optionCount);
-	p->optionCount = optionCount;
-	p->footnote = nullptr;
-	return p;
-}
 
 char* flushraw(std::stringstream *stream) {
 	auto size = stream->tellp();

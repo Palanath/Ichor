@@ -6,7 +6,6 @@
 // Description : Ichor in C++, Ansi-style
 //============================================================================
 
-#include <bits/move.h>
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
