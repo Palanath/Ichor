@@ -37,7 +37,7 @@ int main() {
 
 		std::cout << std::endl << "You may use number keys 1-"
 				<< (p->optionCount > 9 ? 9 : p->optionCount)
-				<< " or letter keys to select an answer:" << std::endl;
+				<< " or letter keys to select an answer..." << std::endl;
 
 		int c = getchar();
 		for (; !(c <= '9' && c >= '1') && !(c <= 'z' && c >= 'a') && c != EOF;
