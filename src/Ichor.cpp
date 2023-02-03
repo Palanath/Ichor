@@ -76,8 +76,6 @@ int main() {
 	free(p);
 	free(optionsCopy);
 
-	std::cout << c;
-
 	if (c != EOF)
 		goto RESTRT;
 	return 0;

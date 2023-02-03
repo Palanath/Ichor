@@ -12,6 +12,7 @@ struct Problem;
 namespace StringGenerator {
 
 struct Problem* generateRandomProblem();
+struct Problem* pickProblem(unsigned);
 
 }  // namespace StringstreamGenerator
 
