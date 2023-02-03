@@ -193,8 +193,8 @@ struct Problem* genFunctionCallProblem2() {
 	for (unsigned i = 0; i < 3; ++i) {
 		q << pickPrimitiveType(rand() % 15) << " func("
 				<< pickPrimitiveType(types[i]) << ", "
-				<< pickPrimitiveType(types[i]) << pickPrimitiveType(types[i])
-				<< ");";
+				<< pickPrimitiveType(types[i]) << ", "
+				<< pickPrimitiveType(types[i]) << ");";
 		p->options[i + 2] = flush(&q);
 	}
 
