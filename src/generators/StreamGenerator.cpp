@@ -107,7 +107,7 @@ struct Problem* genCommaOpTrick1() {
  * The void type is selected using the argument 0. The largest acceptable input value for this function is 14, which will return long double.
  * Values above that will all return char.
  */
-const char* functionCallProblem1_pickType(unsigned type) {
+const char* pickPrimitiveType(unsigned type) {
 	switch (type) {
 	case 0:
 		return "void";
@@ -161,11 +161,11 @@ struct Problem* genFunctionCallProblem1() {
 
 		// Ret type
 		if (returnTypeVaries)
-			q << functionCallProblem1_pickType(rand() % 15);
+			q << pickPrimitiveType(rand() % 15);
 		else
 			q << "void";
 		// Param type
-		q << " func(" << functionCallProblem1_pickType(types[i]) << ");";
+		q << " func(" << pickPrimitiveType(types[i]) << ");";
 		p->options[i] = flush(&q);
 	}
 	q
@@ -174,8 +174,38 @@ struct Problem* genFunctionCallProblem1() {
 	return p;
 }
 
-struct Problem* StringGenerator::generateRandomProblem() {
-	switch (rand() % 4) {
+struct Problem* genFunctionCallProblem2() {
+	Problem *p = genProblem(5);
+	std::stringstream q;
+	q
+			<< "Which of the following declares a function that can be called like so:";
+	p->question = flush(&q);
+	q << "// Function call:" << std::endl << "func(1, \"2\", short(3));";
+	p->code = flush(&q);
+
+	q << "void func();";
+	p->options[0] = flush(&q);
+	q << "void func(void);";
+	p->options[1] = flush(&q);
+
+	unsigned types[3];
+	fillUniqueRand<unsigned>(0, 3, 1, 15, types);
+	for (unsigned i = 0; i < 3; ++i) {
+		q << pickPrimitiveType(rand() % 15) << " func("
+				<< pickPrimitiveType(types[i]) << ", "
+				<< pickPrimitiveType(types[i]) << pickPrimitiveType(types[i])
+				<< ");";
+		p->options[i + 2] = flush(&q);
+	}
+
+	return p;
+}
+
+// The following 2 functions need to be updated when a new problem is added.
+// pickProblem needs to have another case (1 greater than the last value is fine)
+// generateRandomProblem() needs to call pickProblem with a larger random range (so rand() % x needs to be changed to rand() % (x+1) in the call to pickProblem; e.g. rand() % 5 becomes rand() % 6).
+struct Problem* StringGenerator::pickProblem(unsigned problemID) {
+	switch (problemID) {
 	case 0:
 		return genMathProblem1();
 	case 1:
@@ -184,7 +214,12 @@ struct Problem* StringGenerator::generateRandomProblem() {
 		return genCommaOpTrick1();
 	case 3:
 		return genFunctionCallProblem1();
+	case 4:
+		return genFunctionCallProblem2();
 	}
 	return genMathProblem1();
+}
+struct Problem* StringGenerator::generateRandomProblem() {
+	return StringGenerator::pickProblem(rand() % 5);
 }
 
