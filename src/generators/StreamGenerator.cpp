@@ -169,7 +169,7 @@ struct Problem* genFunctionCallProblem1() {
 		p->options[i] = flush(&q);
 	}
 	q
-			<< "Note that a function definitions have bodies (e.g. void f(int x) {}), whereas function declarations do not (e.g. void f(int);).";
+			<< "Note that function definitions have bodies (e.g. void f(int x) {}), whereas function declarations do not (e.g. void f(int);).";
 	p->footnote = flush(&q);
 	return p;
 }
