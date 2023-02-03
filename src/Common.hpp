@@ -29,4 +29,6 @@ template<typename Printable> void prompt(Printable* output, struct Problem* p) {
 		*output << p->footnote << std::endl;
 }
 
+void delProblem(struct Problem*);
+
 #endif /* COMMON_H_ */
