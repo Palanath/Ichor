@@ -21,6 +21,7 @@ int main() {
 	srand(time(0));
 
 	int c = 0;
+	unsigned streak = 0, total = 0;
 	while (c != EOF) {
 		clearConsole();
 		auto p = StringGenerator::generateRandomProblem();
@@ -60,10 +61,20 @@ int main() {
 					std::cout << CONSOLE_RESET;
 				std::cout << std::endl;
 			}
-			std::cout << std::endl
-					<< (c == correctAnswerPos ?
-							"You answered right!" : "That's not correct...")
-					<< std::endl << "Press ENTER to continue...";
+			std::cout << std::endl;
+			if (c == correctAnswerPos) {
+				std::cout << "You answered right!";
+				total++;
+				streak++;
+			} else {
+				std::cout << "That's not correct...";
+				streak = 0;
+			}
+			std::cout << std::endl << "Press ENTER to continue...";
+			std::cout << std::endl << std::endl
+					<< "Streak: " CONSOLE_BRIGHT_YELLOW << streak
+					<< CONSOLE_RESET ", Total: " CONSOLE_BRIGHT_YELLOW << total
+					<< CONSOLE_RESET;
 			std::string s;
 			getline(std::cin, s);
 			getline(std::cin, s);
