@@ -9,10 +9,9 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <sstream>
 
-#include "../Common.hpp"
-#include "../Utilities.hpp"
+#include "Common.hpp"
+#include "Utilities.hpp"
 
 struct Problem* genMathProblem1() {
 	Problem *problem = genProblem(rand() % 3 + 3);

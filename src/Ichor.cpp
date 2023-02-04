@@ -10,11 +10,10 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
-#include <sstream>
 #include <string>
 
 #include "Common.hpp"
-#include "generators/StreamGenerator.hpp"
+#include "StreamGenerator.hpp"
 #include "Utilities.hpp"
 
 int main() {
