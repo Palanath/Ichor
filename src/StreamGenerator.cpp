@@ -200,6 +200,54 @@ struct Problem* genFunctionCallProblem2() {
 	return p;
 }
 
+struct Problem* genLoopProblem1() {
+
+	bool ival = rand() % 2, includeNoneInOptions = rand() % 2;
+
+	Problem *p = genProblem(4 + includeNoneInOptions);
+	std::stringstream q;
+	q << "How many times does the body of this loop run?";
+	p->question = flush(&q);
+
+	q << "for (int i = " << ival << ", j = 10; (i - j) && j > -100; ++i, j--)"
+			<< std::endl << "\t;// ...";
+	p->code = flush(&q);
+
+	q << (ival ? 110 : 10);
+	p->options[0] = flush(&q);
+	int res[3];
+	fillUniqueRand(0, 3, 0, 6, res);
+	for (unsigned i = 0; i < 3; ++i) {
+		switch (res[i]) {
+		case 0:
+			q << (ival ? 10 : 110);
+			break;
+		case 1:
+			q << 9;
+			break;
+		case 2:
+			q << 100;
+			break;
+		case 3:
+			q << 99;
+			break;
+		case 4:
+			q << 101;
+			break;
+		case 5:
+			q << 111;
+		}
+		p->options[i + 1] = flush(&q);
+	}
+	if (includeNoneInOptions) {
+		q << "None";
+		p->options[4] = flush(&q);
+	}
+
+	return p;
+
+}
+
 // The following 2 functions need to be updated when a new problem is added.
 // pickProblem needs to have another case (1 greater than the last value is fine)
 // generateRandomProblem() needs to call pickProblem with a larger random range (so rand() % x needs to be changed to rand() % (x+1) in the call to pickProblem; e.g. rand() % 5 becomes rand() % 6).
@@ -215,10 +263,12 @@ struct Problem* StringGenerator::pickProblem(unsigned problemID) {
 		return genFunctionCallProblem1();
 	case 4:
 		return genFunctionCallProblem2();
+	case 5:
+		return genLoopProblem1();
 	}
 	return genMathProblem1();
 }
 struct Problem* StringGenerator::generateRandomProblem() {
-	return StringGenerator::pickProblem(rand() % 5);
+	return StringGenerator::pickProblem(rand() % 6);
 }
 
