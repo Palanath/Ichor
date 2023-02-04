@@ -213,7 +213,7 @@ struct Problem* genLoopProblem1() {
 			<< std::endl << "\t;// ...";
 	p->code = flush(&q);
 
-	q << (ival ? 110 : 10);
+	q << std::boolalpha << (ival ? 110 : 10);
 	p->options[0] = flush(&q);
 	int res[3];
 	fillUniqueRand(0, 3, 0, 6, res);
