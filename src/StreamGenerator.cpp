@@ -248,6 +248,34 @@ struct Problem* genLoopProblem1() {
 
 }
 
+struct Problem* genComparisonOperatorPrecedenceProblem1() {
+	bool eq = rand() % 2;
+	int x = rand() % 20, y = rand() % 20, z = rand() % 20;
+
+	Problem *p = genProblem(2);
+	std::stringstream q;
+	q
+			<< "What is the value of the variable p after the code finishes executing?";
+	p->question = flush(&q);
+	q << "int x = " << x << ", y = " << y << ", z = " << z << ';' << std::endl
+			<< "int p = (x <";
+	if (eq)
+		q << '=';
+	q << " y != y >";
+	if (eq)
+		q << '=';
+	q << " z);";
+	p->code = flush(&q);
+
+	bool predicate = x <= y != y >= z;
+	q << predicate; // Print as number (since x, in the question, is of type int).
+	p->options[0] = flush(&q);
+	q << !predicate;
+	p->options[1] = flush(&q);
+
+	return p;
+}
+
 // The following 2 functions need to be updated when a new problem is added.
 // pickProblem needs to have another case (1 greater than the last value is fine)
 // generateRandomProblem() needs to call pickProblem with a larger random range (so rand() % x needs to be changed to rand() % (x+1) in the call to pickProblem; e.g. rand() % 5 becomes rand() % 6).
@@ -265,10 +293,12 @@ struct Problem* StringGenerator::pickProblem(unsigned problemID) {
 		return genFunctionCallProblem2();
 	case 5:
 		return genLoopProblem1();
+	case 6:
+		return genComparisonOperatorPrecedenceProblem1();
 	}
 	return genMathProblem1();
 }
 struct Problem* StringGenerator::generateRandomProblem() {
-	return StringGenerator::pickProblem(rand() % 6);
+	return StringGenerator::pickProblem(rand() % 7);
 }
 
