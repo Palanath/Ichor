@@ -1,2 +1,2 @@
 # Ichor
- A program to facilitate learning C's fine-grained syntax.
+ A program to facilitate learning C/C++'s fine-grained syntax.
