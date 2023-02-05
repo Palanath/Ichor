@@ -276,6 +276,37 @@ struct Problem* genComparisonOperatorPrecedenceProblem1() {
 	return p;
 }
 
+struct Problem* genSwitchProblem1() {
+	Problem *p = genProblem(2);
+	std::stringstream q;
+
+	unsigned y = rand() % 15 + 1, trigger = rand() % 3;
+	bool shortDecl = rand() % 2;
+
+	q << "Does the following code print anything?";
+	p->question = flush(&q);
+	q << "int y = " << y;
+	if (shortDecl)
+		q << ", trigger = ";
+	else
+		q << ';' << std::endl << "int trigger = ";
+	q << trigger << ';' << std::endl << std::endl << "switch (trigger)"
+			<< std::endl << "case 0: if (y >= 5) {" << std::endl
+			<< "case 1: if (y < 10) {" << std::endl << "case 2:" << std::endl
+			<< "\tstd::cout << \"PRINTED\" << std::endl;" << std::endl << "}}";
+	p->code = flush(&q);
+
+	bool prints = trigger == 2
+			|| y < 10 && (trigger == 1 || trigger == 0 && y >= 5);
+
+	q << "No";
+	p->options[prints] = flush(&q);
+	q << "Yes";
+	p->options[!prints] = flush(&q);
+	return p;
+
+}
+
 // The following 2 functions need to be updated when a new problem is added.
 // pickProblem needs to have another case (1 greater than the last value is fine)
 // generateRandomProblem() needs to call pickProblem with a larger random range (so rand() % x needs to be changed to rand() % (x+1) in the call to pickProblem; e.g. rand() % 5 becomes rand() % 6).
@@ -295,10 +326,12 @@ struct Problem* StringGenerator::pickProblem(unsigned problemID) {
 		return genLoopProblem1();
 	case 6:
 		return genComparisonOperatorPrecedenceProblem1();
+	case 7:
+		return genSwitchProblem1();
 	}
 	return genMathProblem1();
 }
 struct Problem* StringGenerator::generateRandomProblem() {
-	return StringGenerator::pickProblem(rand() % 7);
+	return StringGenerator::pickProblem(rand() % 8);
 }
 
