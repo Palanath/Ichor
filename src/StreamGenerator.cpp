@@ -307,6 +307,30 @@ struct Problem* genSwitchProblem1() {
 
 }
 
+struct Problem* genIntegralPromotionOfBoolProblem1() {
+	Problem *p = genProblem(rand() % 3 + 5);
+	std::stringstream q;
+
+	unsigned numb = rand() % 30;
+	q << "What does the following code print?";
+	p->question = flush(&q);
+	q << "bool a = " << numb << ';' << std::endl
+			<< "int array[] = {a, a * 2, a * 3, a * 4, a * 5};" << std::endl
+			<< "std::cout << array[a];";
+	p->code = flush(&q);
+	q << (numb ? 2 : 0);
+	p->options[0] = flush(&q);
+
+	unsigned arr[p->optionCount - 1];
+	fillUniqueRand<unsigned>(0, p->optionCount - 1, 2, 30, arr);
+	for (unsigned i = 0; i < p->optionCount - 1; ++i) {
+		q << (arr[i] == 2 ? 1 : arr[i]);
+		p->options[i + 1] = flush(&q);
+	}
+
+	return p;
+}
+
 // The following 2 functions need to be updated when a new problem is added.
 // pickProblem needs to have another case (1 greater than the last value is fine)
 // generateRandomProblem() needs to call pickProblem with a larger random range (so rand() % x needs to be changed to rand() % (x+1) in the call to pickProblem; e.g. rand() % 5 becomes rand() % 6).
@@ -328,10 +352,12 @@ struct Problem* StringGenerator::pickProblem(unsigned problemID) {
 		return genComparisonOperatorPrecedenceProblem1();
 	case 7:
 		return genSwitchProblem1();
+	case 8:
+		return genIntegralPromotionOfBoolProblem1();
 	}
 	return genMathProblem1();
 }
 struct Problem* StringGenerator::generateRandomProblem() {
-	return StringGenerator::pickProblem(rand() % 8);
+	return StringGenerator::pickProblem(rand() % 9);
 }
 
