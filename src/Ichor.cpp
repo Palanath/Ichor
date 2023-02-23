@@ -39,7 +39,7 @@ int main() {
 				<< (p->optionCount > 9 ? 9 : p->optionCount)
 				<< " or letter keys to select an answer..." << std::endl;
 
-		int c = getchar();
+		c = getchar();
 		for (; !(c <= '9' && c >= '1') && !(c <= 'z' && c >= 'a') && c != EOF;
 				c = getchar())
 			;
