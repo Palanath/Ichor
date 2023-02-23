@@ -20,7 +20,7 @@ int main() {
 	srand(time(0));
 
 	int c = 0;
-	unsigned streak = 0, total = 0;
+	unsigned streak = 0, total = 0, highestStreak = 0, totalQuestions = 0;
 	while (c != EOF) {
 		clearConsole();
 		auto p = StringGenerator::generateRandomProblem();
@@ -64,11 +64,13 @@ int main() {
 			if (c == correctAnswerPos) {
 				std::cout << "You answered right!";
 				total++;
-				streak++;
+				if (++streak >= highestStreak)
+					highestStreak = streak;
 			} else {
 				std::cout << "That's not correct...";
 				streak = 0;
 			}
+			totalQuestions++;
 			std::cout << std::endl << "Press ENTER to continue...";
 			std::cout << std::endl << std::endl
 					<< "Streak: " CONSOLE_BRIGHT_YELLOW << streak
@@ -82,6 +84,12 @@ int main() {
 		delProblem(p);
 		free(optionsCopy);
 	}
+
+	clearConsole();
+	std::cout << "-=-=-=-STATS-=-=-=-" << std::endl << "Highest Streak: "
+			<< highestStreak << std::endl << "Total Correct: " << total
+			<< std::endl << "Total Questions Answered: " << totalQuestions;
+
 	return 0;
 }
 
