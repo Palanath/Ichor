@@ -331,6 +331,25 @@ struct Problem* genIntegralPromotionOfBoolProblem1() {
 	return p;
 }
 
+struct Problem* genCommaOperatorProblem1() {
+	Problem *p = genProblem(2);
+	unsigned values[2];
+	fillUniqueRand<unsigned>(0, 2, 3, 13, values);
+
+	std::stringstream q;
+	q << "What does the following code print?";
+	p->question = flush(&q);
+	q << "unsigned a = " << values[0] << ", b = " << values[1] << ';'
+			<< std::endl << "cout << a, b;";
+	p->code = flush(&q);
+	q << values[0];
+	p->options[0] = flush(&q);
+	q << values[1];
+	p->options[1] = flush(&q);
+
+	return p;
+}
+
 // The following 2 functions need to be updated when a new problem is added.
 // pickProblem needs to have another case (1 greater than the last value is fine)
 // generateRandomProblem() needs to call pickProblem with a larger random range (so rand() % x needs to be changed to rand() % (x+1) in the call to pickProblem; e.g. rand() % 5 becomes rand() % 6).
@@ -354,10 +373,12 @@ struct Problem* StringGenerator::pickProblem(unsigned problemID) {
 		return genSwitchProblem1();
 	case 8:
 		return genIntegralPromotionOfBoolProblem1();
+	case 9:
+		return genCommaOperatorProblem1();
 	}
 	return genMathProblem1();
 }
 struct Problem* StringGenerator::generateRandomProblem() {
-	return StringGenerator::pickProblem(rand() % 9);
+	return StringGenerator::pickProblem(rand() % 10);
 }
 
