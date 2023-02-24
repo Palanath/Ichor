@@ -76,7 +76,7 @@ template<class T> void fillWithDistinctRandomElements(unsigned startpos,
 /*
  * Fills the specified part of the array with with random values.
  * The indices of the array affected are from startpos to endpos - 1.
- * The random values generated range between min and max - 1.
+ * The random values generated range between min and max - 1, and are unique.
  */
 template<class T> void fillUniqueRand(unsigned startpos, unsigned endpos, T min,
 		T max, T arr[]) {
@@ -96,6 +96,40 @@ template<class T> void fillUniqueRand(unsigned startpos, unsigned endpos, T min,
 					++arr[i];
 					j = -1; // Restart and check the array again, as arr[i] might now be conflicting with an earlier value.
 					if (arr[i] >= max) // Potentially necessary readjustment.
+						arr[i] = (arr[i] - min) % (max - min) + min;
+				}
+	}
+}
+
+/*
+ * Fills the specified part of the array, from begin to end (inclusive, exclusive), with random values that are unique.
+ * No two random values will be equal to each other, or to any values in the range uniqueBegin to end (inclusive, exclusive).
+ * This allows the caller to fill an array with random values that do not conflict (equal) values at an earlier point in the array.
+ *
+ * If the parameters represent impossibly satisfiable constraints, then the behavior of this function is undefined.
+ * For example, if the range of possible random numbers between min and max (incl., excl.) is far below the number of unique numbers to be generated, this method's behavior is undefined.
+ *
+ * Note that this method will not modify values between uniqueBegin and begin (inclusive, exclusive).
+ * Also note that such numbers do not need to be between min and max (inclusive, exclusive).
+ */
+template<class T> void fillUniqueRand(unsigned uniqueBegin, unsigned begin,
+		unsigned end, T min, T max, T arr[]) {
+	for (unsigned i = begin; i < end; ++i) {
+		arr[i] = rand() % (max - min) + min;
+
+		unsigned shiftcount = 0;
+		for (unsigned j = uniqueBegin; j < i; ++j)
+			if ((arr[i]) >= (arr[j]))
+				++shiftcount;
+		arr[i] += shiftcount;
+		if (arr[i] >= max) // Readjust into range if necessary.
+			arr[i] = (arr[i] - min) % (max - min) + min;
+		if (shiftcount)
+			for (unsigned j = uniqueBegin; j < i; ++j)
+				if (arr[i] == arr[j]) {
+					++arr[i];
+					j = -1;
+					if (arr[i] >= max)
 						arr[i] = (arr[i] - min) % (max - min) + min;
 				}
 	}
