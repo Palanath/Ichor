@@ -24,7 +24,7 @@ struct Problem* genMathProblem1() {
 
 	short options[problem->optionCount];
 	options[0] = firstVar * 2 + secondVar;
-	fillUniqueRand<short>(1, problem->optionCount, -30, 100, options);
+	fillUniqueRand<short>(0, 1, problem->optionCount, -30, 100, options);
 
 	// Generate questions.
 	std::stringstream q;
@@ -367,7 +367,7 @@ struct Problem* genStringLiteralConcatenationProblem1() {
 
 	unsigned arr[opc];
 	arr[0] = count;
-	fillUniqueRand<unsigned>(1, opc, 1, 15, arr);
+	fillUniqueRand<unsigned>(0, 1, opc, 1, 15, arr);
 	for (unsigned i = 0; i < opc; ++i) {
 		for (unsigned j = 0; j < arr[i]; ++j)
 			q << '"';
