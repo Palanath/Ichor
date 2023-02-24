@@ -377,6 +377,29 @@ struct Problem* genStringLiteralConcatenationProblem1() {
 	return p;
 }
 
+struct Problem* genCommaOperatorProblem2() {
+	bool rescount = rand() % 2;
+	Problem *p = genProblem(4 + rescount);
+	std::stringstream q;
+	q << "What is the value of the variable x?";
+	p->question = flush(&q);
+
+	if (rescount) {
+		if (rand() % 2) {
+			// Invokes a buggy warning on G++ (5 "unused").
+			q << "int x = (0, 1 ? 2, 3 : 4, 5);";
+		} else {
+			q << "int x = (5, 4 ? 3, 2 : 1, 0)";
+		}
+	} else {
+		if (rand() % 2) {
+			q << "int x = (0, 1 ? 2, 3 : 4);";
+		} else {
+			q << "int x = (4, 3 ? 2, 1 : 0);";
+		}
+	}
+}
+
 // The following 2 functions need to be updated when a new problem is added.
 // pickProblem needs to have another case (1 greater than the last value is fine)
 // generateRandomProblem() needs to call pickProblem with a larger random range (so rand() % x needs to be changed to rand() % (x+1) in the call to pickProblem; e.g. rand() % 5 becomes rand() % 6).
