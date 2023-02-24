@@ -350,6 +350,33 @@ struct Problem* genCommaOperatorProblem1() {
 	return p;
 }
 
+struct Problem* genStringLiteralConcatenationProblem1() {
+	unsigned opc = rand() % 7 + 3;
+
+	Problem *p = genProblem(opc);
+
+	std::stringstream q;
+	q << "What does the following code print?";
+	p->question = flush(&q);
+	q << "std::cout << ";
+	unsigned short count = 0;
+	for (short literals = rand() % 7 + 3; literals >= 0; --literals)
+		q << (rand() % 2 ? ++count, "\"\\\"\"" : "\"\"");
+	q << ';';
+	p->code = flush(&q);
+
+	unsigned arr[opc];
+	arr[0] = count;
+	fillUniqueRand<unsigned>(1, opc, 1, 15, arr);
+	for (unsigned i = 0; i < opc; ++i) {
+		for (unsigned j = 0; j < arr[i]; ++j)
+			q << '"';
+		p->options[i] = flush(&q);
+	}
+
+	return p;
+}
+
 // The following 2 functions need to be updated when a new problem is added.
 // pickProblem needs to have another case (1 greater than the last value is fine)
 // generateRandomProblem() needs to call pickProblem with a larger random range (so rand() % x needs to be changed to rand() % (x+1) in the call to pickProblem; e.g. rand() % 5 becomes rand() % 6).
@@ -375,10 +402,12 @@ struct Problem* StringGenerator::pickProblem(unsigned problemID) {
 		return genIntegralPromotionOfBoolProblem1();
 	case 9:
 		return genCommaOperatorProblem1();
+	case 10:
+		return genStringLiteralConcatenationProblem1();
 	}
 	return genMathProblem1();
 }
 struct Problem* StringGenerator::generateRandomProblem() {
-	return StringGenerator::pickProblem(rand() % 10);
+	return StringGenerator::pickProblem(rand() % 11);
 }
 
