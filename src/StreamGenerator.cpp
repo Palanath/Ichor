@@ -416,6 +416,31 @@ struct Problem* genCommaOperatorProblem2() {
 	return p;
 }
 
+struct Problem* genOperatorSyntaxAmbiguityProblem1() {
+	Problem *p = genProblem(4);
+	std::stringstream q;
+	q << "What is the value of the variable z?";
+	p->question = flush(&q);
+
+	unsigned options[2];
+	fillUniqueRand<unsigned>(0, 2, 1, 9, options);
+
+	q << "int x = " << options[0] << ", y = " << options[1] << ';' << std::endl
+			<< "int z = x +++ y;";
+	p->code = flush(&q);
+
+	q << options[0] + options[1];
+	p->options[0] = flush(&q);
+	q << options[0];
+	p->options[1] = flush(&q);
+	q << options[1];
+	p->options[2] = flush(&q);
+	q << options[0] + options[1] + 1;
+	p->options[3] = flush(&q);
+
+	return p;
+}
+
 // The following 2 functions need to be updated when a new problem is added.
 // pickProblem needs to have another case (1 greater than the last value is fine)
 // generateRandomProblem() needs to call pickProblem with a larger random range (so rand() % x needs to be changed to rand() % (x+1) in the call to pickProblem; e.g. rand() % 5 becomes rand() % 6).
@@ -445,10 +470,12 @@ struct Problem* StringGenerator::pickProblem(unsigned problemID) {
 		return genStringLiteralConcatenationProblem1();
 	case 11:
 		return genCommaOperatorProblem2();
+	case 12:
+		return genOperatorSyntaxAmbiguityProblem1();
 	}
 	return genMathProblem1();
 }
 struct Problem* StringGenerator::generateRandomProblem() {
-	return StringGenerator::pickProblem(rand() % 12);
+	return StringGenerator::pickProblem(rand() % 13);
 }
 
