@@ -340,7 +340,7 @@ struct Problem* genCommaOperatorProblem1() {
 	q << "What does the following code print?";
 	p->question = flush(&q);
 	q << "unsigned a = " << values[0] << ", b = " << values[1] << ';'
-			<< std::endl << "cout << a, b;";
+			<< std::endl << "std::cout << a, b;";
 	p->code = flush(&q);
 	q << values[0];
 	p->options[0] = flush(&q);
