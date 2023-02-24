@@ -378,26 +378,42 @@ struct Problem* genStringLiteralConcatenationProblem1() {
 }
 
 struct Problem* genCommaOperatorProblem2() {
-	bool rescount = rand() % 2;
-	Problem *p = genProblem(4 + rescount);
+	bool rescount = rand() % 2, unflipped = rand() % 2;
+	Problem *p = genProblem(5 + rescount);
 	std::stringstream q;
 	q << "What is the value of the variable x?";
 	p->question = flush(&q);
 
 	if (rescount) {
-		if (rand() % 2) {
+		if (unflipped)
 			// Invokes a buggy warning on G++ (5 "unused").
 			q << "int x = (0, 1 ? 2, 3 : 4, 5);";
-		} else {
+		else
 			q << "int x = (5, 4 ? 3, 2 : 1, 0)";
+
+		p->code = flush(&q);
+		for (unsigned short i = 0; i < 6; ++i) {
+			q << (unflipped ? 5 - i : i);
+			p->options[i] = flush(&q);
 		}
 	} else {
-		if (rand() % 2) {
+		if (unflipped)
 			q << "int x = (0, 1 ? 2, 3 : 4);";
-		} else {
+		else
 			q << "int x = (4, 3 ? 2, 1 : 0);";
+
+		std::cout << "TESTING!!!!!!!" << std::endl;
+
+		p->code = flush(&q);
+		q << 1 + unflipped * 2; // Correct answer (fourth number from the left in expression).
+		p->options[0] = flush(&q);
+		for (unsigned short i = 1; i < 5; ++i) {
+			q << (i <= 1 + unflipped * 2 ? i - 1 : i);
+			p->options[i] = flush(&q);
 		}
 	}
+
+	return p;
 }
 
 // The following 2 functions need to be updated when a new problem is added.
@@ -427,10 +443,12 @@ struct Problem* StringGenerator::pickProblem(unsigned problemID) {
 		return genCommaOperatorProblem1();
 	case 10:
 		return genStringLiteralConcatenationProblem1();
+	case 11:
+		return genCommaOperatorProblem2();
 	}
 	return genMathProblem1();
 }
 struct Problem* StringGenerator::generateRandomProblem() {
-	return StringGenerator::pickProblem(rand() % 11);
+	return StringGenerator::pickProblem(rand() % 12);
 }
 
