@@ -441,6 +441,22 @@ struct Problem* genOperatorSyntaxAmbiguityProblem1() {
 	return p;
 }
 
+struct Problem* genCharAdditionProblem1() {
+	Problem *p = genProblem(3);
+	std::stringstream q;
+	q << "What is the type of the variable x?";
+	p->question = flush(&q);
+
+	q << "char a = 1, b = 2;" << std::endl << "auto x = a + b;";
+	p->code = flush(&q);
+
+	p->options[0] = mallocstr("int");
+	p->options[1] = mallocstr("char");
+	p->options[2] = mallocstr("short");
+
+	return p;
+}
+
 // The following 2 functions need to be updated when a new problem is added.
 // pickProblem needs to have another case (1 greater than the last value is fine)
 // generateRandomProblem() needs to call pickProblem with a larger random range (so rand() % x needs to be changed to rand() % (x+1) in the call to pickProblem; e.g. rand() % 5 becomes rand() % 6).
@@ -472,10 +488,12 @@ struct Problem* StringGenerator::pickProblem(unsigned problemID) {
 		return genCommaOperatorProblem2();
 	case 12:
 		return genOperatorSyntaxAmbiguityProblem1();
+	case 13:
+		return genCharAdditionProblem1();
 	}
 	return genMathProblem1();
 }
 struct Problem* StringGenerator::generateRandomProblem() {
-	return StringGenerator::pickProblem(rand() % 13);
+	return StringGenerator::pickProblem(rand() % 14);
 }
 
