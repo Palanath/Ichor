@@ -447,7 +447,10 @@ struct Problem* genCharAdditionProblem1() {
 	q << "What is the type of the variable x?";
 	p->question = flush(&q);
 
-	q << "char a = 1, b = 2;" << std::endl << "auto x = a + b;";
+	bool aNumb = rand() % 2, bNumb = rand() % 2;
+	q << "char a = ";
+	(aNumb ? q << 1 : q << "'a'") << ", b = ";
+	(bNumb ? q << 2 : q << "'b'") << ";" << std::endl << "auto x = a + b;";
 	p->code = flush(&q);
 
 	p->options[0] = mallocstr("int");
