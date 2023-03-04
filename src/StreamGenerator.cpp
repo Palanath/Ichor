@@ -460,6 +460,42 @@ struct Problem* genCharAdditionProblem1() {
 	return p;
 }
 
+struct Problem* genReturnByReferenceProblem1() {
+	Problem *p = genProblem(6);
+
+	p->question = mallocstr(
+			"What set of numbers does the following code print?");
+
+	int r = rand() % 32 + 3;
+
+	const char *line =
+			rand() % 2 ?
+					"\tstd::cout << (++test()) << std::endl;" :
+					"\tstd::cout << ++test() << std::endl;";
+	std::stringstream q;
+	q << "#include <iostream>" << std::endl << std::endl << "auto& test() {"
+			<< std::endl << "\tstatic int x = " << r << ";" << std::endl
+			<< "\treturn ++x;" << std::endl << '}' << std::endl << std::endl
+			<< "int main() {" << std::endl << line << std::endl << line
+			<< std::endl << line << std::endl << '}';
+	p->code = flush(&q);
+
+	q << r + 2 << ", " << r + 4 << ", " << r + 6;
+	p->options[0] = flush(&q);
+	q << r + 1 << ", " << r + 2 << ", " << r + 3;
+	p->options[1] = flush(&q);
+	q << r + 1 << ", " << r + 3 << ", " << r + 5;
+	p->options[2] = flush(&q);
+	q << r << ", " << r + 2 << ", " << r + 4;
+	p->options[3] = flush(&q);
+	q << r << ", " << r + 1 << ", " << r + 2;
+	p->options[4] = flush(&q);
+	q << r + 2 << ", " << r + 3 << ", " << r + 4;
+	p->options[5] = flush(&q);
+
+	return p;
+}
+
 // The following 2 functions need to be updated when a new problem is added.
 // pickProblem needs to have another case (1 greater than the last value is fine)
 // generateRandomProblem() needs to call pickProblem with a larger random range (so rand() % x needs to be changed to rand() % (x+1) in the call to pickProblem; e.g. rand() % 5 becomes rand() % 6).
@@ -493,10 +529,12 @@ struct Problem* StringGenerator::pickProblem(unsigned problemID) {
 		return genOperatorSyntaxAmbiguityProblem1();
 	case 13:
 		return genCharAdditionProblem1();
+	case 14:
+		return genReturnByReferenceProblem1();
 	}
 	return genMathProblem1();
 }
 struct Problem* StringGenerator::generateRandomProblem() {
-	return StringGenerator::pickProblem(rand() % 14);
+	return StringGenerator::pickProblem(rand() % 15);
 }
 
