@@ -9,7 +9,6 @@
 
 #include <string>
 
-
 char* flushraw(std::stringstream *stream) {
 	auto size = stream->tellp();
 	char *res = (char*) malloc(size);
@@ -21,6 +20,13 @@ char* flushraw(std::stringstream *stream) {
 char* flush(std::stringstream *stream) {
 	(*stream) << std::ends;
 	return flushraw(stream);
+}
+
+char* mallocstr(const char *str) {
+	auto len = strlen(str);
+	char *res = (char*) malloc(len + 1);
+	memcpy(res, str, len + 1);
+	return res;
 }
 
 void clearConsole() {

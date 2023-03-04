@@ -26,6 +26,12 @@ struct Problem;
  * This implementation appends std::ends to the stream (via (*stream)<<std::ends;) and then calls and returns the result of flushraw(stream);.
  */
 char* flush(std::stringstream *stream);
+
+/*
+ * Copies the specified string into malloced memory and returns the memory. The null-terminator is also copied.
+ */
+char* mallocstr(const char*);
+
 /*
  * malloc()s a char[] and copies the contents of the specified stream to it, then clears the stream.
  */
