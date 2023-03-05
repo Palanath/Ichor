@@ -11,7 +11,7 @@
 #include "Common.hpp"
 
 class OptimizationGenerator final : ProblemGenerator {
-	struct Problem* generateProblem() override;
+	public: struct Problem* generateProblem() override;
 };
 
 #endif /* OPTIMIZATIONGENERATOR_HPP_ */
