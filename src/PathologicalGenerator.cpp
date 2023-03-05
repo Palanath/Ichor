@@ -533,7 +533,7 @@ struct Problem* PathologicalGenerator::pickProblem(unsigned problemID) {
 	}
 	return genMathProblem1();
 }
-struct Problem* PathologicalGenerator::generateRandomProblem() {
-	return PathologicalGenerator::pickProblem(rand() % 15);
+struct Problem* PathologicalGenerator::generateProblem() {
+	return pickProblem(rand() % 15);
 }
 

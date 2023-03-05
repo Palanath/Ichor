@@ -19,11 +19,13 @@
 int main() {
 	srand(time(0));
 
+	ProblemGenerator* pg = new PathologicalGenerator;
+
 	int c = 0;
 	unsigned streak = 0, total = 0, highestStreak = 0, totalQuestions = 0;
 	while (c != EOF) {
 		clearConsole();
-		auto p = PathologicalGenerator::generateRandomProblem();
+		auto p = pg->generateProblem();
 
 		char **optionsCopy = copy(p->optionCount, p->options);
 		shuffle(1, p->optionCount, optionsCopy); // Shuffle all but first element.
@@ -84,6 +86,8 @@ int main() {
 		delProblem(p);
 		free(optionsCopy);
 	}
+
+	delete pg;
 
 	clearConsole();
 	std::cout << "-=-=-=-STATS-=-=-=-" << std::endl << "Highest Streak: "

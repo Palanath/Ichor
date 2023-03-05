@@ -9,11 +9,9 @@
 #define PATHOLOGICALGENERATOR_H_
 struct Problem;
 
-namespace PathologicalGenerator {
-
-struct Problem* generateRandomProblem();
-struct Problem* pickProblem(unsigned);
-
-}  // namespace PathologicalGenerator
+class PathologicalGenerator final: public ProblemGenerator {
+	struct Problem* generateProblem();
+	struct Problem* pickProblem(unsigned);
+};
 
 #endif /* PATHOLOGICALGENERATOR_H_ */
