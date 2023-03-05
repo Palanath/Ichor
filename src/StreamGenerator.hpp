@@ -9,7 +9,7 @@
 #define STRINGSTREAMGENERATOR_H_
 struct Problem;
 
-namespace StringGenerator {
+namespace StreamGenerator {
 
 struct Problem* generateRandomProblem();
 struct Problem* pickProblem(unsigned);

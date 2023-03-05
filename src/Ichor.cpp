@@ -23,7 +23,7 @@ int main() {
 	unsigned streak = 0, total = 0, highestStreak = 0, totalQuestions = 0;
 	while (c != EOF) {
 		clearConsole();
-		auto p = StringGenerator::generateRandomProblem();
+		auto p = StreamGenerator::generateRandomProblem();
 
 		char **optionsCopy = copy(p->optionCount, p->options);
 		shuffle(1, p->optionCount, optionsCopy); // Shuffle all but first element.

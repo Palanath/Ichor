@@ -499,7 +499,7 @@ struct Problem* genReturnByReferenceProblem1() {
 // The following 2 functions need to be updated when a new problem is added.
 // pickProblem needs to have another case (1 greater than the last value is fine)
 // generateRandomProblem() needs to call pickProblem with a larger random range (so rand() % x needs to be changed to rand() % (x+1) in the call to pickProblem; e.g. rand() % 5 becomes rand() % 6).
-struct Problem* StringGenerator::pickProblem(unsigned problemID) {
+struct Problem* StreamGenerator::pickProblem(unsigned problemID) {
 	switch (problemID) {
 	case 0:
 		return genMathProblem1();
@@ -534,7 +534,7 @@ struct Problem* StringGenerator::pickProblem(unsigned problemID) {
 	}
 	return genMathProblem1();
 }
-struct Problem* StringGenerator::generateRandomProblem() {
-	return StringGenerator::pickProblem(rand() % 15);
+struct Problem* StreamGenerator::generateRandomProblem() {
+	return StreamGenerator::pickProblem(rand() % 15);
 }
 
