@@ -10,7 +10,7 @@
 struct Problem;
 
 class PathologicalGenerator final: public ProblemGenerator {
-	struct Problem* generateProblem();
+	struct Problem* generateProblem() override;
 	struct Problem* pickProblem(unsigned);
 };
 
