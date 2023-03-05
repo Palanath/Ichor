@@ -1,16 +1,15 @@
 /*
- * StringstreamGenerator.cpp
+ * PathologicalGenerator.cpp
  *
  *  Created on: Jan 30, 2023
  *      Author: Palanath
  */
 
-#include "StreamGenerator.hpp"
-
 #include <cstdlib>
 #include <iostream>
 
 #include "Common.hpp"
+#include "PathologicalGenerator.hpp"
 #include "Utilities.hpp"
 
 struct Problem* genMathProblem1() {
@@ -499,7 +498,7 @@ struct Problem* genReturnByReferenceProblem1() {
 // The following 2 functions need to be updated when a new problem is added.
 // pickProblem needs to have another case (1 greater than the last value is fine)
 // generateRandomProblem() needs to call pickProblem with a larger random range (so rand() % x needs to be changed to rand() % (x+1) in the call to pickProblem; e.g. rand() % 5 becomes rand() % 6).
-struct Problem* StreamGenerator::pickProblem(unsigned problemID) {
+struct Problem* PathologicalGenerator::pickProblem(unsigned problemID) {
 	switch (problemID) {
 	case 0:
 		return genMathProblem1();
@@ -534,7 +533,7 @@ struct Problem* StreamGenerator::pickProblem(unsigned problemID) {
 	}
 	return genMathProblem1();
 }
-struct Problem* StreamGenerator::generateRandomProblem() {
-	return StreamGenerator::pickProblem(rand() % 15);
+struct Problem* PathologicalGenerator::generateRandomProblem() {
+	return PathologicalGenerator::pickProblem(rand() % 15);
 }
 

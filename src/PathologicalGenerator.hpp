@@ -5,15 +5,15 @@
  *      Author: Palanath
  */
 
-#ifndef STRINGSTREAMGENERATOR_H_
-#define STRINGSTREAMGENERATOR_H_
+#ifndef PATHOLOGICALGENERATOR_H_
+#define PATHOLOGICALGENERATOR_H_
 struct Problem;
 
-namespace StreamGenerator {
+namespace PathologicalGenerator {
 
 struct Problem* generateRandomProblem();
 struct Problem* pickProblem(unsigned);
 
-}  // namespace StringstreamGenerator
+}  // namespace PathologicalGenerator
 
-#endif /* STRINGSTREAMGENERATOR_H_ */
+#endif /* PATHOLOGICALGENERATOR_H_ */
