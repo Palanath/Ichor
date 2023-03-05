@@ -12,7 +12,7 @@
 #include "PathologicalGenerator.hpp"
 #include "Utilities.hpp"
 
-struct Problem* genMathProblem1() {
+struct Problem* PathologicalGenerator::genMathProblem1() {
 	Problem *problem = genProblem(rand() % 3 + 3);
 
 	// Generate randoms.
@@ -44,7 +44,7 @@ struct Problem* genMathProblem1() {
 	return problem;
 }
 
-struct Problem* genCharLiteralProblem1() {
+struct Problem* PathologicalGenerator::genCharLiteralProblem1() {
 	Problem *problem = genProblem((rand() % 2 + 2) * 2);
 
 	//Generate random stuff.
@@ -69,7 +69,7 @@ struct Problem* genCharLiteralProblem1() {
 	return problem;
 }
 
-struct Problem* genCommaOpTrick1() {
+struct Problem* PathologicalGenerator::genCommaOpTrick1() {
 	Problem *problem = genProblem(4);
 
 	unsigned short n1 = rand() % 7, n2 = rand() % 7;
@@ -105,7 +105,7 @@ struct Problem* genCommaOpTrick1() {
  * The void type is selected using the argument 0. The largest acceptable input value for this function is 14, which will return long double.
  * Values above that will all return char.
  */
-const char* pickPrimitiveType(unsigned type) {
+const char* PathologicalGenerator::pickPrimitiveType(unsigned type) {
 	switch (type) {
 	case 0:
 		return "void";
@@ -140,7 +140,7 @@ const char* pickPrimitiveType(unsigned type) {
 	}
 	return "char";
 }
-struct Problem* genFunctionCallProblem1() {
+struct Problem* PathologicalGenerator::genFunctionCallProblem1() {
 	Problem *p = genProblem(5);
 	std::stringstream q;
 	q
@@ -172,7 +172,7 @@ struct Problem* genFunctionCallProblem1() {
 	return p;
 }
 
-struct Problem* genFunctionCallProblem2() {
+struct Problem* PathologicalGenerator::genFunctionCallProblem2() {
 	Problem *p = genProblem(5);
 	std::stringstream q;
 	q
@@ -199,7 +199,7 @@ struct Problem* genFunctionCallProblem2() {
 	return p;
 }
 
-struct Problem* genLoopProblem1() {
+struct Problem* PathologicalGenerator::genLoopProblem1() {
 
 	bool ival = rand() % 2, includeNoneInOptions = rand() % 2;
 
@@ -247,7 +247,7 @@ struct Problem* genLoopProblem1() {
 
 }
 
-struct Problem* genComparisonOperatorPrecedenceProblem1() {
+struct Problem* PathologicalGenerator::genComparisonOperatorPrecedenceProblem1() {
 	bool eq = rand() % 2;
 	int x = rand() % 20, y = rand() % 20, z = rand() % 20;
 
@@ -275,7 +275,7 @@ struct Problem* genComparisonOperatorPrecedenceProblem1() {
 	return p;
 }
 
-struct Problem* genSwitchProblem1() {
+struct Problem* PathologicalGenerator::genSwitchProblem1() {
 	Problem *p = genProblem(2);
 	std::stringstream q;
 
@@ -306,7 +306,7 @@ struct Problem* genSwitchProblem1() {
 
 }
 
-struct Problem* genIntegralPromotionOfBoolProblem1() {
+struct Problem* PathologicalGenerator::genIntegralPromotionOfBoolProblem1() {
 	Problem *p = genProblem(rand() % 3 + 5);
 	std::stringstream q;
 
@@ -330,7 +330,7 @@ struct Problem* genIntegralPromotionOfBoolProblem1() {
 	return p;
 }
 
-struct Problem* genCommaOperatorProblem1() {
+struct Problem* PathologicalGenerator::genCommaOperatorProblem1() {
 	Problem *p = genProblem(2);
 	unsigned values[2];
 	fillUniqueRand<unsigned>(0, 2, 3, 13, values);
@@ -349,7 +349,7 @@ struct Problem* genCommaOperatorProblem1() {
 	return p;
 }
 
-struct Problem* genStringLiteralConcatenationProblem1() {
+struct Problem* PathologicalGenerator::genStringLiteralConcatenationProblem1() {
 	unsigned opc = rand() % 7 + 3;
 
 	Problem *p = genProblem(opc);
@@ -376,7 +376,7 @@ struct Problem* genStringLiteralConcatenationProblem1() {
 	return p;
 }
 
-struct Problem* genCommaOperatorProblem2() {
+struct Problem* PathologicalGenerator::genCommaOperatorProblem2() {
 	bool rescount = rand() % 2, unflipped = rand() % 2;
 	Problem *p = genProblem(5 + rescount);
 	std::stringstream q;
@@ -415,7 +415,7 @@ struct Problem* genCommaOperatorProblem2() {
 	return p;
 }
 
-struct Problem* genOperatorSyntaxAmbiguityProblem1() {
+struct Problem* PathologicalGenerator::genOperatorSyntaxAmbiguityProblem1() {
 	Problem *p = genProblem(4);
 	std::stringstream q;
 	q << "What is the value of the variable z?";
@@ -440,7 +440,7 @@ struct Problem* genOperatorSyntaxAmbiguityProblem1() {
 	return p;
 }
 
-struct Problem* genCharAdditionProblem1() {
+struct Problem* PathologicalGenerator::genCharAdditionProblem1() {
 	Problem *p = genProblem(3);
 	std::stringstream q;
 	q << "What is the type of the variable x?";
@@ -459,7 +459,7 @@ struct Problem* genCharAdditionProblem1() {
 	return p;
 }
 
-struct Problem* genReturnByReferenceProblem1() {
+struct Problem* PathologicalGenerator::genReturnByReferenceProblem1() {
 	Problem *p = genProblem(6);
 
 	p->question = mallocstr(
