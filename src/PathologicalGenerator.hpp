@@ -10,9 +10,6 @@
 struct Problem;
 
 class PathologicalGenerator final: public ProblemGenerator {
-	struct Problem* generateProblem() override;
-	struct Problem* pickProblem(unsigned);
-private:
 	struct Problem* genMathProblem1();
 	struct Problem* genCharLiteralProblem1();
 	struct Problem* genCommaOpTrick1();
@@ -26,8 +23,12 @@ private:
 	struct Problem* genStringLiteralConcatenationProblem1();
 	struct Problem* genCommaOperatorProblem2();
 	struct Problem* genOperatorSyntaxAmbiguityProblem1();
-	struct Problem* genCharAdditionProblem1();struct Problem* genReturnByReferenceProblem1();
+	struct Problem* genCharAdditionProblem1();
+	struct Problem* genReturnByReferenceProblem1();
 	const char* pickPrimitiveType(unsigned type);
+public:
+	struct Problem* generateProblem() override;
+	struct Problem* pickProblem(unsigned);
 };
 
 #endif /* PATHOLOGICALGENERATOR_H_ */
