@@ -144,7 +144,7 @@ struct Problem* PathologicalGenerator::genFunctionCallProblem1() {
 	Problem *p = genProblem(5);
 	std::stringstream q;
 	q
-			<< "Which of the following declares a function that CANNOT be called like so:";
+			<< "In C, Which of the following declares a function that CANNOT be called like so:";
 	p->question = flush(&q);
 	q << "// Function call:" << std::endl << "func(1);";
 	p->code = flush(&q);
