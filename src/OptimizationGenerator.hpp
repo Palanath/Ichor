@@ -10,8 +10,11 @@
 
 #include "Common.hpp"
 
-class OptimizationGenerator final : ProblemGenerator {
-	public: struct Problem* generateProblem() override;
+class OptimizationGenerator final : public ProblemGenerator {
+	struct Problem* genForLoopProblem1();
+	struct Problem* genUnnecessaryCodeProblem1();
+public:
+	struct Problem* generateProblem() override;
 };
 
 #endif /* OPTIMIZATIONGENERATOR_HPP_ */

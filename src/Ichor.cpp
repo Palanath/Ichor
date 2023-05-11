@@ -13,13 +13,13 @@
 #include <string>
 
 #include "Common.hpp"
-#include "PathologicalGenerator.hpp"
+#include "OptimizationGenerator.hpp"
 #include "Utilities.hpp"
 
 int main() {
 	srand(time(0));
 
-	ProblemGenerator* pg = new PathologicalGenerator;
+	ProblemGenerator* pg = new OptimizationGenerator;
 
 	int c = 0;
 	unsigned streak = 0, total = 0, highestStreak = 0, totalQuestions = 0;
